@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { FaBars, FaChessKnight } from "react-icons/fa";
-import { FaChess } from "react-icons/fa6";
-import { FaShoppingBag } from "react-icons/fa";
-import { CgWebsite } from "react-icons/cg";
-import { BiError } from "react-icons/bi";
-import { FaLink } from "react-icons/fa";
-import { CgProfile } from "react-icons/cg";
+import { LiaChessKnightSolid } from "react-icons/lia";
+import { LiaChessSolid } from "react-icons/lia";
+import { LiaShoppingBagSolid } from "react-icons/lia";
+import { LiaReceiptSolid } from "react-icons/lia";
+import { LiaExclamationTriangleSolid } from "react-icons/lia";
+import { LiaLinkSolid } from "react-icons/lia";
+import { LiaUserTieSolid } from "react-icons/lia";
+import { LiaCoinsSolid } from "react-icons/lia";
+import { LiaUnlockAltSolid } from "react-icons/lia";
+import { MdMailOutline } from "react-icons/md";
+import { BsCupHot } from "react-icons/bs";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -21,154 +26,190 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="flex  overflow-hidden h-screen  bg-gray-800 text-white">
-        {isSidebarOpen && (
-          <div className="transition-all z-50 w-80 border">
-            <div className="p-4">
-              <h1 className="text-2xl font-bold mb-4">Myalgobusiness.com</h1>
-              <ul>
-                <li
-                  className={`mb-5 hover:bg-white hover:text-black hover:rounded-3xl p-3 flex ${
-                    selectedMenuItem === "dashboard"
-                      ? "bg-white text-black rounded-3xl"
-                      : ""
-                  }`}
-                  onClick={() => handleMenuItemClick("dashboard")}
-                >
-                  <FaBars className="mr-2 text-2xl" />
-                  Dashboard
-                </li>
-                <li
-                className={`mb-5 hover:bg-white hover:text-black hover:rounded-3xl p-3 flex ${
-                  selectedMenuItem === "strategies" ? "bg-white text-black rounded-3xl" : ""
+      <div className="flex overflow-hidden h-screen bg-gray-800 text-white">
+        <div
+          className={`transition-all ${
+            isSidebarOpen ? "w-80" : "w-24"
+          } overflow-y-scroll overflow-x-scroll overflow-hidden border`}
+        >
+          <div className="p-4">
+            <h1 className="text-md ml-5  mb-10">Myalgobusiness.com</h1>
+            <ul>
+              <li
+                className={`mb-4 w-full hover:bg-white hover:text-black hover:rounded-3xl p-1 flex ${
+                  selectedMenuItem === "dashboard"
+                    ? "bg-white text-black rounded-3xl"
+                    : ""
                 }`}
-                onClick={() => handleMenuItemClick("strategies")}
+                onClick={() => handleMenuItemClick("dashboard")}
               >
-                <FaChessKnight className="mr-2 text-2xl" />
-                My Strategies
+                <FaBars className=" text-2xl" />
+                {isSidebarOpen && <span>Dashboard</span>}
+              </li>
+
+              <li
+                className={`mb-4 w-full hover:bg-white hover:text-black hover:rounded-3xl p-1 flex ${
+                  selectedMenuItem === "myStrategies"
+                    ? "bg-white text-black rounded-3xl"
+                    : ""
+                }`}
+                onClick={() => handleMenuItemClick("myStrategies")}
+              >
+                <LiaChessKnightSolid className=" text-2xl" />
+                {isSidebarOpen && <span>My Strategies</span>}
               </li>
               <li
-                className={`mb-5 hover:bg-white hover:text-black hover:rounded-3xl p-3 flex ${
-                  selectedMenuItem === "strategyHub" ? "bg-white text-black rounded-3xl" : ""
+                className={`mb-4 w-full hover:bg-white hover:text-black hover:rounded-3xl p-1 flex ${
+                  selectedMenuItem === "Strategieshub"
+                    ? "bg-white text-black rounded-3xl"
+                    : ""
                 }`}
-                onClick={() => handleMenuItemClick("strategyHub")}
+                onClick={() => handleMenuItemClick("Strategieshub")}
               >
-                <FaChess className="mr-2 text-2xl" />
-                Strategy Hub
+                <LiaChessSolid className=" text-2xl" />
+                {isSidebarOpen && <span>Strategy Hub</span>}
+              </li>
+
+              <li
+                className={`mb-4 w-full hover:bg-white hover:text-black hover:rounded-3xl p-1 flex ${
+                  selectedMenuItem === "order"
+                    ? "bg-white text-black rounded-3xl"
+                    : ""
+                }`}
+                onClick={() => handleMenuItemClick("order")}
+              >
+                <LiaShoppingBagSolid className=" text-2xl" />
+                {isSidebarOpen && <span>Order</span>}
               </li>
               <li
-                className={`mb-5 hover:bg-white hover:text-black hover:rounded-3xl p-3 flex ${
-                  selectedMenuItem === "orders" ? "bg-white text-black rounded-3xl" : ""
-                }`}
-                onClick={() => handleMenuItemClick("orders")}
-              >
-                <FaShoppingBag className="mr-2 text-2xl" />
-                Orders
-              </li>
-              <li
-                className={`mb-5 hover:bg-white hover:text-black hover:rounded-3xl p-3 flex ${
-                  selectedMenuItem === "position" ? "bg-white text-black rounded-3xl" : ""
+                className={`mb-4 w-full hover:bg-white hover:text-black hover:rounded-3xl p-1 flex ${
+                  selectedMenuItem === "position"
+                    ? "bg-white text-black rounded-3xl"
+                    : ""
                 }`}
                 onClick={() => handleMenuItemClick("position")}
               >
-                <CgWebsite className="mr-2 text-2xl" />
-                Position
+                <LiaReceiptSolid className=" text-2xl" />
+                {isSidebarOpen && <span>Position</span>}
               </li>
               <li
-                className={`mb-5 hover:bg-white hover:text-black hover:rounded-3xl p-3 flex ${
-                  selectedMenuItem === "error" ? "bg-white text-black rounded-3xl" : ""
+                className={`mb-4 w-full hover:bg-white hover:text-black hover:rounded-3xl p-1 flex ${
+                  selectedMenuItem === "error"
+                    ? "bg-white text-black rounded-3xl"
+                    : ""
                 }`}
                 onClick={() => handleMenuItemClick("error")}
               >
-                <BiError className="mr-3 text-2xl" />
-                Error
+                <LiaExclamationTriangleSolid className=" text-2xl" />
+                {isSidebarOpen && <span>Errors</span>}
               </li>
               <li
-                className={`mb-5 hover:bg-white hover:text-black hover:rounded-3xl p-3 flex ${
-                  selectedMenuItem === "broker" ? "bg-white text-black rounded-3xl" : ""
+                className={`mb-4 w-full hover:bg-white hover:text-black hover:rounded-3xl p-1 flex ${
+                  selectedMenuItem === "broker"
+                    ? "bg-white text-black rounded-3xl"
+                    : ""
                 }`}
                 onClick={() => handleMenuItemClick("broker")}
               >
-                <FaLink className="mr-3 text-2xl" />
-                Broker
+                <LiaLinkSolid className=" text-2xl" />
+                {isSidebarOpen && <span>Broker</span>}
               </li>
               <li
-                className={`mb-5 hover:bg-white hover:text-black hover:rounded-3xl p-3 flex ${
-                  selectedMenuItem === "profile" ? "bg-white text-black rounded-3xl" : ""
+                className={`mb-4 w-full hover:bg-white hover:text-black hover:rounded-3xl p-1 flex ${
+                  selectedMenuItem === "profile"
+                    ? "bg-white text-black rounded-3xl"
+                    : ""
                 }`}
                 onClick={() => handleMenuItemClick("profile")}
               >
-                <CgProfile className="mr-3 text-2xl" />
-                Profile
+                <LiaUserTieSolid className=" text-2xl" />
+                {isSidebarOpen && <span>Profile</span>}
               </li>
-              </ul>
-            </div>
+            </ul>
           </div>
-        )}
+        </div>
+
         <div className="flex flex-col flex-1">
-          <div className="flex bg-gray-800 z-0 border text-white justify-between">
-            <div className={`flex-1 transition-all ${isSidebarOpen ? "ml-2" : "ml-10"}`}>
-              <button className="flex text-xl py-1 rounded-lg font-bold mb-2" onClick={toggleSidebar}>
+          <div className="flex bg-gray-800 z-0 border rounded-xl text-white justify-between">
+            <div
+              className={`flex-1 transition-all ${
+                isSidebarOpen ? "ml-2" : "ml-10"
+              }`}
+            >
+              <button
+                className="flex text-xl py-1 rounded-lg font-bold mb-2"
+                onClick={toggleSidebar}
+              >
                 <FaBars className="text-xl mr-2 mt-1" />
                 Dashboard
               </button>
             </div>
             <div className="flex flex-col items-center">
               <button className="flex text-xl p-3 py-1 rounded-lg font-bold mb-2">
-                <CgProfile className="text-2xl mr-3" />
+                <LiaUserTieSolid className="text-2xl mr-3" />
                 Anuj Mishra
               </button>
               <button className="ml-10 text-2xl">Logout</button>
             </div>
           </div>
-          <div className={`flex-1 transition-all ${isSidebarOpen ? "ml-2" : "ml-10"}`}>
+          <div
+            className={`flex-1 transition-all ${
+              isSidebarOpen ? "ml-2" : "ml-10"
+            }`}
+          >
             {selectedMenuItem === "dashboard" && (
               <div className="flex-1 flex-col transition-all">
-                <h1>Main Content for Dashboard</h1>
+                <div className="flex justify-between p-5">
+                  <div className="bg-white flex p-5 mt-10 text-black">
+                    <div className="">
+                      <p className="p-2 font-bold mt-2">0</p>
+                      <p className="text-gray-400">Today's Profit</p>
+                    </div>
+                    <div className="flex justify-center ml-36 mt-5">
+                      <LiaCoinsSolid className="text-4xl" />
+                    </div>
+                  </div>
+                  <div className="bg-white flex p-5 mt-10 text-black">
+                    <div className="">
+                      <p className=" font-bold mt-2">
+                        <span className="font-bold">Time:</span>
+                        2024-01-27 13:15:50
+                      </p>
+                      <p className="font-bold mt-2">
+                        <span className="font-bold">Time:</span>
+                        windows
+                      </p>
+                      <p className="text-gray-400">Last Login Info</p>
+                    </div>
+                    <div className="flex justify-center ml-20 mt-5">
+                      <LiaUnlockAltSolid className="text-4xl" />
+                    </div>
+                  </div>
+                  <div className="bg-white flex p-5 mt-10 text-black">
+                    <div className="">
+                      <p className="p-2 font-bold mt-2">PREMIUM</p>
+                      <p className="text-gray-400">Your Active Plan</p>
+                    </div>
+                    <div className="flex justify-center ml-36 mt-5">
+                      <BsCupHot className="text-4xl" />
+                    </div>
+                  </div>
+                  <div className="bg-[#5957ea] text-white flex p-5 mt-10 ">
+                    <div className="">
+                      <p className="p-2 font-bold mt-2">Support</p>
+                    </div>
+                    <div className="flex justify-center ml-32 mt-5">
+                      <MdMailOutline className="text-6xl" />
+                    </div>
+                  </div>
+                </div>
+                <div className="p-5">
+                <div className="bg-white rounded-lg overflow-y-scroll h-[1000px]">
+                  <h1 className="text-black border shadow-lg p-5 text-xl font-bold">Recent Trades</h1>
+                </div>
+                </div>
               </div>
             )}
-            {selectedMenuItem === "strategies" && (
-          <div className="flex-1 transition-all">
-            {/* Content for My Strategies */}
-            <p>My Strategies Content Goes Here</p>
-          </div>
-        )}
-        {selectedMenuItem === "strategyHub" && (
-          <div className="flex-1 transition-all">
-            {/* Content for Strategy Hub */}
-            <p>Strategy Hub Content Goes Here</p>
-          </div>
-        )}
-        {selectedMenuItem === "orders" && (
-          <div className="flex-1 transition-all">
-            {/* Content for Orders */}
-            <p>Orders Content Goes Here</p>
-          </div>
-        )}
-        {selectedMenuItem === "position" && (
-          <div className="flex-1 transition-all">
-            {/* Content for Position */}
-            <p>Position Content Goes Here</p>
-          </div>
-        )}
-        {selectedMenuItem === "error" && (
-          <div className="flex-1 transition-all">
-            {/* Content for Error */}
-            <p>Error Content Goes Here</p>
-          </div>
-        )}
-        {selectedMenuItem === "broker" && (
-          <div className="flex-1 transition-all">
-            {/* Content for Broker */}
-            <p>Broker Content Goes Here</p>
-          </div>
-        )}
-        {selectedMenuItem === "profile" && (
-          <div className="flex-1 transition-all">
-            {/* Content for Profile */}
-            <p>Profile Content Goes Here</p>
-          </div>
-        )}
           </div>
         </div>
       </div>
