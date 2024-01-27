@@ -20,22 +20,25 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex overflow-hidden h-screen bg-gray-800 text-white">
-      {isSidebarOpen && (
-        <div className="transition-all">
-          <div className="p-4">
-            <h1 className="text-2xl font-bold mb-4">Myalgobusiness.com</h1>
-            <ul>
-              <li
-                className={`mb-5 hover:bg-white hover:text-black hover:rounded-3xl p-3 flex ${
-                  selectedMenuItem === "dashboard" ? "bg-white text-black rounded-3xl" : ""
-                }`}
-                onClick={() => handleMenuItemClick("dashboard")}
-              >
-                <FaBars className="mr-2 text-2xl" />
-                Dashboard
-              </li>
-              <li
+    <>
+      <div className="flex  overflow-hidden h-screen  bg-gray-800 text-white">
+        {isSidebarOpen && (
+          <div className="transition-all z-50 w-80 border">
+            <div className="p-4">
+              <h1 className="text-2xl font-bold mb-4">Myalgobusiness.com</h1>
+              <ul>
+                <li
+                  className={`mb-5 hover:bg-white hover:text-black hover:rounded-3xl p-3 flex ${
+                    selectedMenuItem === "dashboard"
+                      ? "bg-white text-black rounded-3xl"
+                      : ""
+                  }`}
+                  onClick={() => handleMenuItemClick("dashboard")}
+                >
+                  <FaBars className="mr-2 text-2xl" />
+                  Dashboard
+                </li>
+                <li
                 className={`mb-5 hover:bg-white hover:text-black hover:rounded-3xl p-3 flex ${
                   selectedMenuItem === "strategies" ? "bg-white text-black rounded-3xl" : ""
                 }`}
@@ -98,44 +101,33 @@ const Dashboard = () => {
                 <CgProfile className="mr-3 text-2xl" />
                 Profile
               </li>
-            </ul>
-          </div>
-        </div>
-      )}
-      
-      <div className=" flex-col justify-center border w-full">
-        
-        {selectedMenuItem === "dashboard" && (
-          <div className="flex-1 flex-col transition-all">
-              <div className="flex justify-end">
-        <div
-          className={`flex-1 ${
-            isSidebarOpen ? "ml-10" : "ml-5"
-          } transition-all`}
-        >
-          <button
-            className=" flex text-xl py-1 rounded-lg font-bold mb-2"
-            onClick={toggleSidebar}
-          >
-            <FaBars className="text-xl mr-2 mt-1" />
-            Dashboard
-          </button>
-        </div>
-        <div>
-          <button
-            className="flex text-xl p-3 py-1 rounded-lg font-bold mb-2"
-            onClick={toggleSidebar}
-          >
-            <CgProfile className="text-2xl mr-3" />
-            Anuj Mishra
-          </button>
-          <button className="ml-10 text-2xl">logout
-          </button>
-        </div>
-      </div>
+              </ul>
+            </div>
           </div>
         )}
-        {selectedMenuItem === "strategies" && (
+        <div className="flex flex-col flex-1">
+          <div className="flex bg-gray-800 z-0 border text-white justify-between">
+            <div className={`flex-1 transition-all ${isSidebarOpen ? "ml-2" : "ml-10"}`}>
+              <button className="flex text-xl py-1 rounded-lg font-bold mb-2" onClick={toggleSidebar}>
+                <FaBars className="text-xl mr-2 mt-1" />
+                Dashboard
+              </button>
+            </div>
+            <div className="flex flex-col items-center">
+              <button className="flex text-xl p-3 py-1 rounded-lg font-bold mb-2">
+                <CgProfile className="text-2xl mr-3" />
+                Anuj Mishra
+              </button>
+              <button className="ml-10 text-2xl">Logout</button>
+            </div>
+          </div>
+          <div className={`flex-1 transition-all ${isSidebarOpen ? "ml-2" : "ml-10"}`}>
+            {selectedMenuItem === "dashboard" && (
+              <div className="flex-1 flex-col transition-all">
+                <h1>Main Content for Dashboard</h1>
+              </div>
+            )}
+            {selectedMenuItem === "strategies" && (
           <div className="flex-1 transition-all">
             {/* Content for My Strategies */}
             <p>My Strategies Content Goes Here</p>
@@ -177,8 +169,10 @@ const Dashboard = () => {
             <p>Profile Content Goes Here</p>
           </div>
         )}
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
