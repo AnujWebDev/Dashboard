@@ -11,7 +11,7 @@ import { LiaCoinsSolid } from "react-icons/lia";
 import { LiaUnlockAltSolid } from "react-icons/lia";
 import { MdMailOutline } from "react-icons/md";
 import { BsCupHot } from "react-icons/bs";
-
+import { Link } from "react-router-dom";
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
@@ -121,11 +121,11 @@ const Dashboard = () => {
               >
                 <LiaExclamationTriangleSolid className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span className="z-10" style={{ fontFamily: "PT Sans, sans-serif" }}>
                     Errors
                   </span>
                 )}
-                <div className="absolute bottom-4 right-44 -mt-1 -mr-1 bg-red-600 p-3 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+                <div className="absolute z-0 bottom-4 right-44 -mt-1 -mr-1 bg-red-600 p-3 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
                   {numberOfErrors}
                 </div>
               </li>
@@ -182,12 +182,12 @@ const Dashboard = () => {
             >
               <button
                 style={{ fontFamily: "PT Sans, sans-serif" }}
-                className="flex text-xl  mr-16 p-3 py-1 rounded-lg font-bold mb-2"
+                className="hidden text-xl  mr-16 p-3 py-1 rounded-lg font-bold mb-2"
               >
                 <LiaUserTieSolid className="text-2xl mr-3" />
                 Anuj Mis
               </button>
-              <button className="ml-10 mr-16 text-xl">Logout</button>
+              <Link to={'/login'} className="ml-10 mr-16 text-xl">Login</Link>
             </div>
           </div>
           <div
@@ -240,20 +240,22 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div className="p-2  w-full">
+              <div className="p-5 w-full">
                 <div className="bg-white rounded-lg w-full overflow-y-scroll overflow-x-scroll  h-[600px]">
                   <h1 className="text-black w-[1000px] lg:w-full border shadow-lg p-5 text-xl font-bold">
                     Recent Trades
                   </h1>
-                  <div className="flex flex-row gap-5 border w-[1000px] lg:w-full hover:bg-blue-200 justify-between mt-5 text-black p-2">
-                    <p>Strategy</p>
-                    <p>Script</p>
-                    <p>Qty</p>
-                    <p>Side</p>
-                    <p>Entry Price</p>
-                    <p>Exit Price</p>
-                    <p>Pnl</p>
-                    <p>Status</p>
+                  <div className="p-3">
+                  <div className="flex p-2 flex-row gap-5 border w-[1000px] lg:w-full hover:bg-blue-200 justify-between mt-5 text-black">
+                    <p style={{ fontFamily: "PT Sans, sans-serif" }} className="font-bold">Strategy</p>
+                    <p style={{ fontFamily: "PT Sans, sans-serif" }} className="font-bold">Script</p>
+                    <p style={{ fontFamily: "PT Sans, sans-serif" }} className="font-bold">Qty</p>
+                    <p style={{ fontFamily: "PT Sans, sans-serif" }} className="font-bold">Side</p>
+                    <p style={{ fontFamily: "PT Sans, sans-serif" }} className="font-bold">Entry Price</p>
+                    <p style={{ fontFamily: "PT Sans, sans-serif" }} className="font-bold">Exit Price</p>
+                    <p style={{ fontFamily: "PT Sans, sans-serif" }} className="font-bold">Pnl</p>
+                    <p style={{ fontFamily: "PT Sans, sans-serif" }} className="font-bold">Status</p>
+                  </div>
                   </div>
                 </div>
               </div>
