@@ -57,7 +57,6 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                // Add any additional attributes or event handlers as needed
               />
             </div>
 
@@ -76,11 +75,8 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                // Add any additional attributes or event handlers as needed
               />
             </div>
-
-            {/* Add your login button or any other form elements here */}
             <button
               type="submit"
               className="bg-blue-500 w-full text-white p-2 rounded-md hover:bg-blue-700"
