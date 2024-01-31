@@ -1,45 +1,44 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { TiArrowBack } from "react-icons/ti";
-import { registerUserThunk } from "../redux/authSlice";
-import { useDispatch } from "react-redux";
+import { AppContext } from "../Context/AppContext";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
-  const dispatch = useDispatch();
+  const data = useContext(AppContext);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [Cpassword, setCPassword] = useState("");
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const navigate = useNavigate();
 
-  const userData = {
-    phone,
-    email,
-    password,
-    Cpassword,
+  const handleSignup = async (e) => {
+    e.preventDefault();
+      console.log("Before registering:", { name, email, password, phone });
+      const registerRes=await data.register({ name, email, password, phone });
+      console.log("After successful registration");
+
+
+        toast.success(registerRes.message, {
+          position: "top-center",
+          autoClose: 2999,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        if(registerRes.message!=="User already exists!"){
+          setTimeout(()=>{
+              navigate('/')
+          },3000)
+      }
   };
-
-  const handleSignup = () => {
-    dispatch(registerUserThunk(userData))
-      .then((res) => {
-        console.log(res);
-
-        if (res.payload.data.success) {
-          setCPassword("");
-          setEmail("");
-          setPassword("");
-          setPhone("");
-        }
-
-        return res;
-      })
-      .catch((err) => {
-        console.log(err);
-        return err.response;
-      });
-  };
-
+  
   return (
-    <div className=" min-h-screen bg-[rgb(21,32,43)]">
+    <div className="min-h-screen bg-[rgb(21,32,43)]">
       <Link
         to={"/"}
         className="p-3  hover:cursor-pointer bg-orange text-center flex font-plus-jakarta-sans text-white w-20 rounded-full transition duration-500 ease-in-out transform hover:bg-white hover:text-black hover:scale-90"
@@ -50,7 +49,24 @@ const SignUp = () => {
         <div className="p-8 rounded shadow-md w-96">
           <h2 className="text-2xl font-bold text-white mb-4">Sign Up</h2>
 
-          <form>
+          <form onSubmit={handleSignup}>
+            <div className="mb-4">
+              <label
+                className="block text-white text-sm font-semibold mb-2"
+                htmlFor="email"
+              >
+                Name
+              </label>
+              <input
+                className="w-full p-2 border rounded-md"
+                type="text"
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                name="name"
+                placeholder="Enter your Name"
+              />
+            </div>
             <div className="mb-4">
               <label
                 className="block text-white text-sm font-semibold mb-2"
@@ -69,23 +85,6 @@ const SignUp = () => {
               />
             </div>
 
-            <div className="mb-4">
-              <label
-                className="block text-white text-sm font-semibold mb-2"
-                htmlFor="phone"
-              >
-                Phone Number
-              </label>
-              <input
-                className="w-full p-2 border rounded-md"
-                type="tel"
-                id="phone"
-                name="phone"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="Enter your phone number"
-              />
-            </div>
 
             <div className="mb-4">
               <label
@@ -104,27 +103,26 @@ const SignUp = () => {
                 placeholder="Enter your password"
               />
             </div>
-
+            
             <div className="mb-4">
               <label
                 className="block text-white text-sm font-semibold mb-2"
-                htmlFor="confirmPassword"
+                htmlFor="phone"
               >
-                Confirm Password
+                Phone Number
               </label>
               <input
-                value={Cpassword}
-                onChange={(e) => setCPassword(e.target.value)}
                 className="w-full p-2 border rounded-md"
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm your password"
+                type="tel"
+                id="phone"
+                name="phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Enter your phone number"
               />
             </div>
             <button
               type="submit"
-              onClick={handleSignup}
               className="bg-blue-500 w-full text-white p-2 rounded-md hover:bg-blue-700"
             >
               Sign Up
@@ -139,6 +137,7 @@ const SignUp = () => {
           </p>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

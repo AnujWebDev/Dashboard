@@ -6,17 +6,17 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-const Login = () => {
+const AdminLogin = () => {
   const navigate = useNavigate();
   const data=useContext(AppContext)
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [Adminemail, setAdminEmail] = useState("");
+  const [Adminpassword, setAdminPassword] = useState("");
 
 
   const handleLogin =async (e) => {
     e.preventDefault();
 
-    const loginResult =await data.Login(email, password);
+    const loginResult =await data.AdminLogin(Adminemail, Adminpassword);
         toast.success(loginResult.message, {
             position: "top-right",
             autoClose: 3000,
@@ -29,9 +29,9 @@ const Login = () => {
 
 
         });
-        if(loginResult.message!=="User not exist..!" && loginResult.message!== "Invalid Credential.."){
+        if(loginResult.message!=="Admin not exist..!" && loginResult.message!== "Invalid Credential.."){
             setTimeout(()=>{
-                navigate('/dashboard')
+                navigate('/admindashboard')
             },2000)
         }
 
@@ -48,7 +48,7 @@ const Login = () => {
       </Link>
       <div className="flex bg-[rgb(21,32,43)] items-center justify-center h-screen">
         <div className="p-8 rounded shadow-md w-96">
-          <h2 className="text-2xl font-bold text-white mb-4">Login</h2>
+          <h2 className="text-2xl font-bold text-white mb-4">Admin Login</h2>
 
           <form onSubmit={handleLogin}>
             <div className="mb-4">
@@ -63,8 +63,8 @@ const Login = () => {
                 type="email"
                 id="email"
                 name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={Adminemail}
+                onChange={(e) => setAdminEmail(e.target.value)}
                 placeholder="Enter your email"
               />
             </div>
@@ -81,8 +81,8 @@ const Login = () => {
                 type="password"
                 id="password"
                 name="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={Adminpassword}
+                onChange={(e) => setAdminPassword(e.target.value)}
                 placeholder="Enter your password"
               />
             </div>
@@ -94,19 +94,10 @@ const Login = () => {
             </button>
             
           </form>
-          <div className="mt-5">
-            <Link
-              to={'/adminlogin'}
-              className="bg-red-500 w-full text-center mt-10 text-white p-2 rounded-md hover:bg-red-700"
-            >
-              Login As Admin
-            </Link>
-            </div>
-
           <p className="text-white text-sm mt-4">
-            Don't have an account?{" "}
-            <Link to="/signup" className="text-blue-500 underline">
-              Sign Up here
+            Login as User?{" "}
+            <Link to="/" className="text-blue-500 underline">
+              Login here!
             </Link>
           </p>
         </div>
@@ -116,4 +107,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default AdminLogin;

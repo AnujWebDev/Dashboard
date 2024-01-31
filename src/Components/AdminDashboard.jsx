@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaBars, FaChessKnight } from "react-icons/fa";
 import { LiaChessKnightSolid } from "react-icons/lia";
 import { LiaChessSolid } from "react-icons/lia";
@@ -13,12 +13,160 @@ import { MdMailOutline } from "react-icons/md";
 import { BsCupHot } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
-const Dashboard = () => {
+import Modal from "react-modal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { RiDeleteBinLine } from "react-icons/ri";
+import axios from "axios";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+const AdminDashboard = () => {
   const entryData = useContext(AppContext);
-  const { user } = useContext(AppContext);
+  const { admin } = useContext(AppContext);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
   const [numberOfErrors, setNumberOfErrors] = useState(0);
+  const [Stratergy, setStrategy] = useState("");
+  const [Script, setScript] = useState("");
+  const [Qty, setQty] = useState(0);
+  const [Side, setSide] = useState("BUY");
+  const [EntryPrice, setEntryPrice] = useState(0);
+  const [ExitPrice, setExitPrice] = useState(0);
+  const [Status, setStatus] = useState("Open");
+
+  
+  useEffect(() => {
+    const fetchEntryBYId = async () => {
+      const api = await axios.get(`${entryData.url}/entry/${entryData.id}`, {
+
+        headers: {
+          "Content-Type": "application/json",
+          Auth:entryData.token
+        },
+        withCredentials: true,
+      });
+      let entry=api.data.entry
+      console.log("useEffect id",entry);
+      setStrategy(entry.Stratergy);
+      setScript(entry.Script);
+      setQty(entry.Qty);
+      setSide(entry.Side);
+      setEntryPrice(entry.EntryPrice);
+      setExitPrice(entry.ExitPrice);
+      setStatus(entry.Status)
+      
+    };
+   fetchEntryBYId()
+    
+  }, [entryData.id]);
+
+
+  const SubmitHandler = async (e) => {
+    e.preventDefault();
+    console.log(
+      "getting form data =",
+      Stratergy,
+      Script,
+      Qty,
+      Side,
+      EntryPrice,
+      ExitPrice,
+      Status
+    );
+    if(!entryData.id){
+      
+    await entryData.addEntry({
+      Stratergy,
+      Script,
+      Qty,
+      Side,
+      EntryPrice,
+      ExitPrice,
+      Status,
+    });
+    entryData.setReload(!entryData.reload);
+    const response = entryData.addEntry;
+    console.log("entry", response.message);
+    // console.log("message",entryData.data.message)
+    toast.success("Entry Added Successfully", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  }else{
+    // await entryData.updateEntry({
+    //   Stratergy,
+    //   Script,
+    //   Qty,
+    //   Side,
+    //   EntryPrice,
+    //   ExitPrice,
+    //   Status,
+    // })
+    const updateEntry=async(id)=>{
+      const api = await axios.put(
+        `${entryData.url}/entry/${id}`,
+        {
+          Stratergy,Script,Qty,Side,EntryPrice,ExitPrice,Status
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Auth:entryData.token
+          },
+          withCredentials: true,
+        }
+      );
+  
+      entryData.setReload(!entryData.reload);
+      console.log(api);
+    }
+    updateEntry(entryData.id);
+    toast.success("Entry Edited Successfully", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+    closeModal()
+
+  }
+  entryData.setId(" ")
+  
+  };
+
+
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    subtitle.style.color = "#000";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -40,8 +188,13 @@ const Dashboard = () => {
     return totalPnl >= 0 ? roundedTotalPnl : -roundedTotalPnl;
 };
 
+
+  // Example usage with 2 decimal places
+  const result = calculateTodayProfit();
+  console.log(result);
+
   const todayProfitOrLoss = calculateTodayProfit();
-  const isProfit = todayProfitOrLoss >= 0;
+  console.log("todayProfitOrLoss",todayProfitOrLoss)
   const data = [
     {
       title: "Today's Profit",
@@ -82,6 +235,7 @@ const Dashboard = () => {
 
   return (
     <>
+      <ToastContainer />
       <div className="flex h-auto bg-[#15202b] text-white">
         <div
           className={`transition-all ${
@@ -238,26 +392,34 @@ const Dashboard = () => {
                 isSidebarOpen ? "mr-52" : ""
               }`}
             >
-              {entryData.isAuthenticated && (
-                <>
+              {entryData.isAdminAuthenticated && (
+                <div className="flex justify-end ">
+                  <LiaUserTieSolid className="text-2xl mr-3" />
                   <Link
                     style={{ fontFamily: "PT Sans, sans-serif" }}
-                    className="flex text-sm mr-10 p-3 py-1 rounded-lg font-bold mb-2"
+                    className="flex flex-col text-sm mr-10 p-3 py-1 rounded-lg font-bold mb-2"
                   >
-                    <LiaUserTieSolid className="text-2xl mr-3" />
-                    {user?.name}
+                    {admin?.Adminname}
+                    <span className="text-sm">{"(admin)"}</span>
                   </Link>
-                </>
+                </div>
               )}
 
-              {entryData.isAuthenticated && (
-                <Link to={"/"} onClick={entryData.Logout} className="ml-10 mr-20 lg:mr-10 text-sm">
+              {entryData.isAdminAuthenticated && (
+                <Link
+                  onClick={entryData.AdminLogout}
+                  to={"/adminlogin"}
+                  className="ml-10 mr-20 relative top-[-14px] left-[-27px] lg:mr-10 text-sm"
+                >
                   Logout
                 </Link>
               )}
-              {!entryData.isAuthenticated && (
-                <Link to={"/"}  className="ml-10 mr-20 lg:mr-20 p-2 text-sm">
-                  login
+              {!entryData.isAdminAuthenticated && (
+                <Link
+                  to={"/adminlogin"}
+                  className="ml-10 mr-20 lg:mr-10 text-sm"
+                >
+                  Login
                 </Link>
               )}
             </div>
@@ -268,7 +430,7 @@ const Dashboard = () => {
             }`}
           >
             <div className="flex-1 mt-16 flex-col overflow-y-scroll transition-all">
-              <div className="flex flex-col sm:flex-row justify-between gap-2 p-5">
+              <div className="flex flex-col lg:flex-row justify-between gap-2 p-5">
                 {data.map((item, index) => (
                   <div
                     key={index}
@@ -313,9 +475,13 @@ const Dashboard = () => {
                             {item.subtitle}
                             {index === 0 && (
                               <span
-                                style={{ color: isProfit ? "green" : "red" }}
-                                className="text-2xl"
+                                style={{
+                                  color:
+                                    todayProfitOrLoss < 0 ? "red" : "green",
+                                  fontSize: "2xl", 
+                                }}
                               >
+                                {todayProfitOrLoss < 0 ? "-" : ""}
                                 {Math.abs(todayProfitOrLoss)}
                               </span>
                             )}
@@ -336,11 +502,157 @@ const Dashboard = () => {
               </div>
               <div className="p-5 w-full h-screen ">
                 <div className="bg-white rounded-lg w-full overflow-y-scroll overflow-x-scroll h-[600px]">
-                  <h1 className="text-black  lg:w-full border shadow-lg p-5 text-xl font-bold">
-                    Recent Trades
-                  </h1>
+                  <div className=" lg:w-full flex border w-[700px] shadow-lg p-5  font-bold">
+                    <h1 className="text-black text-xl mt-2 ">Recent Trades</h1>
+                    <button
+                      className="bg-red-500 mt-2 text-sm rounded-xl ml-5 border text-white px-3 hover:bg-white hover:text-black"
+                      onClick={openModal}
+                    >
+                      Add Entry
+                    </button>
+                  </div>
+                  <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                  >
+                    <button
+                      onClick={closeModal}
+                      className="float-right m-3 p-2 border hover:bg-red-500 hover:text-white rounded-full  text-red-500"
+                    >
+                      x
+                    </button>
+                    <form
+                      onSubmit={SubmitHandler}
+                      className="w-80 p-6 bg-white rounded-lg shadow-md"
+                    >
+                      <div className="mb-2">
+                        <label
+                          htmlFor="Strategy"
+                          className="block text-sm font-bold text-gray-600"
+                        >
+                          Strategy:
+                          <input
+                            type="text"
+                            id="Strategy"
+                            name="Strategy"
+                            value={Stratergy}
+                            onChange={(e) => setStrategy(e.target.value)}
+                            className="form-input mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                          />
+                        </label>
+                      </div>
+                      <div className="mb-2">
+                        <label
+                          htmlFor="Script"
+                          className="block text-sm font-bold text-gray-600"
+                        >
+                          Script:
+                          <input
+                            type="text"
+                            id="Script"
+                            name="Script"
+                            value={Script}
+                            onChange={(e) => setScript(e.target.value)}
+                            className="form-input mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                          />
+                        </label>
+                      </div>
+                      <div className="mb-2">
+                        <label
+                          htmlFor="qty"
+                          className="block text-sm font-bold text-gray-600"
+                        >
+                          Quantity:
+                          <input
+                            type="text"
+                            id="qty"
+                            name="qty"
+                            value={Qty}
+                            onChange={(e) => setQty(e.target.value)}
+                            className="form-input mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                          />
+                        </label>
+                      </div>
+                      <div className="mb-2">
+                        <label
+                          htmlFor="side"
+                          className="block text-sm font-bold text-gray-600"
+                        >
+                          Side:
+                          <select
+                            id="side"
+                            name="side"
+                            value={Side}
+                            onChange={(e) => setSide(e.target.value)}
+                            className="form-select mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                          >
+                            <option value="BUY">BUY</option>
+                            <option value="SELL">SELL</option>
+                          </select>
+                        </label>
+                      </div>
+                      <div className="mb-2">
+                        <label
+                          htmlFor="entryPrice"
+                          className="block text-sm font-bold text-gray-600"
+                        >
+                          Entry Price:
+                          <input
+                            type="text"
+                            id="entryPrice"
+                            name="entryPrice"
+                            value={EntryPrice}
+                            onChange={(e) => setEntryPrice(e.target.value)}
+                            className="form-input mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                          />
+                        </label>
+                      </div>
+                      <div className="mb-2">
+                        <label
+                          htmlFor="exitPrice"
+                          className="block text-sm font-bold text-gray-600"
+                        >
+                          Exit Price:
+                          <input
+                            type="text"
+                            id="exitPrice"
+                            name="exitPrice"
+                            value={ExitPrice}
+                            onChange={(e) => setExitPrice(e.target.value)}
+                            className="form-input mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                          />
+                        </label>
+                      </div>
+                      <div className="mb-2">
+                        <label
+                          htmlFor="Status"
+                          className="block text-sm font-bold text-gray-600"
+                        >
+                          Status:
+                          <select
+                            id="Status"
+                            name="Status"
+                            value={Status}
+                            onChange={(e) => setStatus(e.target.value)}
+                            className="form-select mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                          >
+                            <option value="Open">Open</option>
+                            <option value="Closed">Closed</option>
+                          </select>
+                        </label>
+                      </div>
+                      <button
+                        type="submit"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                      >
+                        Submit
+                      </button>
+                    </form>
+                  </Modal>
                   <div className="p-3">
-                  <table className=" w-full">
+                    <table className=" w-full">
                       <thead>
                         <tr className="hover:bg-blue-200">
                           <th className="p-2 text-black font-bold">Strategy</th>
@@ -393,7 +705,37 @@ const Dashboard = () => {
                             <td className="p-2 text-black text-center">
                               {e.Status}
                             </td>
-                            
+                            <td>
+                              <button onClick={()=>{entryData.setId(e._id),openModal()}} className="text-white bg-blue-400 border rounded-lg px-2  ">
+                                Edit
+                              </button>
+                            </td>
+                            <td>
+                              {entryData.isAdminAuthenticated &&(
+                              <button
+                                onClick={async () => {
+                                  const res = await entryData.DeleteEntry(
+                                    e._id
+                                  );
+                                  console.log("Entry Deleted", res);
+                                  toast.success(`${res.message}`, {
+                                    position: "top-right",
+                                    autoClose: 3000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                    theme: "light",
+                                  });
+                                  entryData.setReload(!entryData.reload);
+                                }}
+                                className="text-white bg-red-500 text-3xl border rounded-lg  "
+                              >
+                                <RiDeleteBinLine />
+                              </button>
+                              )}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -412,4 +754,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;
