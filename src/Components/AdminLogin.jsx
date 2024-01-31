@@ -11,7 +11,7 @@ const AdminLogin = () => {
   const data=useContext(AppContext)
   const [Adminemail, setAdminEmail] = useState("");
   const [Adminpassword, setAdminPassword] = useState("");
-
+  console.log("Admin details",Adminemail,Adminpassword)
 
   const handleLogin =async (e) => {
     e.preventDefault();
@@ -46,11 +46,11 @@ const AdminLogin = () => {
       >
         <TiArrowBack className="text-4xl ml-2" />
       </Link>
-      <div className="flex bg-[rgb(21,32,43)] items-center justify-center h-screen">
-        <div className="p-8 rounded shadow-md w-96">
-          <h2 className="text-2xl font-bold text-white mb-4">Admin Login</h2>
+        <div className="flex bg-[rgb(21,32,43)] items-center justify-center h-screen">
+          <div className="p-8 rounded shadow-md w-96">
+            <h2 className="text-2xl font-bold text-white mb-4">Admin Login</h2>
 
-          <form onSubmit={handleLogin}>
+            <form onSubmit={handleLogin}>
             <div className="mb-4">
               <label
                 className="block text-white text-sm font-semibold mb-2"

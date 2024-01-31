@@ -10,7 +10,7 @@ const AppState = (props) => {
   const [reload,setReload]=useState(false)
   const [id,setId]=useState('');
   const [user, setUser] = useState("");
-  const [admin, setAdmin] = useState("");
+  const [admin, setAdmin] = useState(""); 
 
   const url = "https://dashboard-backend-oyt9.onrender.com/api";
 
