@@ -43,32 +43,27 @@ const AdminDashboard = () => {
   const [ExitPrice, setExitPrice] = useState(0);
   const [Status, setStatus] = useState("Open");
 
-  
   useEffect(() => {
     const fetchEntryBYId = async () => {
       const api = await axios.get(`${entryData.url}/entry/${entryData.id}`, {
-
         headers: {
           "Content-Type": "application/json",
-          Auth:entryData.token
+          Auth: entryData.token,
         },
         withCredentials: true,
       });
-      let entry=api.data.entry
-      console.log("useEffect id",entry);
+      let entry = api.data.entry;
+      console.log("useEffect id", entry);
       setStrategy(entry.Stratergy);
       setScript(entry.Script);
       setQty(entry.Qty);
       setSide(entry.Side);
       setEntryPrice(entry.EntryPrice);
       setExitPrice(entry.ExitPrice);
-      setStatus(entry.Status)
-      
+      setStatus(entry.Status);
     };
-   fetchEntryBYId()
-    
+    fetchEntryBYId();
   }, [entryData.id]);
-
 
   const SubmitHandler = async (e) => {
     e.preventDefault();
@@ -82,77 +77,72 @@ const AdminDashboard = () => {
       ExitPrice,
       Status
     );
-    if(!entryData.id){
-      
-    await entryData.addEntry({
-      Stratergy,
-      Script,
-      Qty,
-      Side,
-      EntryPrice,
-      ExitPrice,
-      Status,
-    });
-    entryData.setReload(!entryData.reload);
-    const response = entryData.addEntry;
-    console.log("entry", response.message);
-    // console.log("message",entryData.data.message)
-    toast.success("Entry Added Successfully", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  }else{
-    // await entryData.updateEntry({
-    //   Stratergy,
-    //   Script,
-    //   Qty,
-    //   Side,
-    //   EntryPrice,
-    //   ExitPrice,
-    //   Status,
-    // })
-    const updateEntry=async(id)=>{
-      const api = await axios.put(
-        `${entryData.url}/entry/${id}`,
-        {
-          Stratergy,Script,Qty,Side,EntryPrice,ExitPrice,Status
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Auth:entryData.token
-          },
-          withCredentials: true,
-        }
-      );
-  
+    if (entryData.id == " ") {
+      await entryData.addEntry({
+        Stratergy,
+        Script,
+        Qty,
+        Side,
+        EntryPrice,
+        ExitPrice,
+        Status,
+      });
+
       entryData.setReload(!entryData.reload);
-      console.log(api);
+      // const response = entryData.addEntry;
+      // console.log("entry", response.message);
+
+      toast.success("Entry Added Successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } else {
+      const updateEntry = async (id) => {
+        const api = await axios.put(
+          `${entryData.url}/entry/${id}`,
+          {
+            Stratergy,
+            Script,
+            Qty,
+            Side,
+            EntryPrice,
+            ExitPrice,
+            Status,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Auth: entryData.token,
+            },
+            withCredentials: true,
+          }
+        );
+
+        entryData.setReload(!entryData.reload);
+        console.log(api);
+      };
+      updateEntry(entryData.id);
+      toast.success("Entry Edited Successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      closeModal();
     }
-    updateEntry(entryData.id);
-    toast.success("Entry Edited Successfully", {
-      position: "top-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-    closeModal()
 
-  }
-  entryData.setId(" ")
-  
+    entryData.setId(" "); // Set id to null or an appropriate value after processing
   };
-
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
@@ -177,61 +167,24 @@ const AdminDashboard = () => {
   };
   const calculateTodayProfit = (r, decimalPlaces = 2) => {
     const totalPnl = entryData.entry.reduce((acc, item) => {
-        r;
-        const pnlValue = parseFloat(item.Pnl);
-        return !isNaN(pnlValue) ? acc + pnlValue : acc;
+      r;
+      const pnlValue = parseFloat(item.Pnl);
+      return !isNaN(pnlValue) ? acc + pnlValue : acc;
     }, 0);
 
     const roundedTotalPnl = Number(Math.abs(totalPnl).toFixed(decimalPlaces));
-    
+
     // Check the sign of totalPnl and adjust accordingly
     return totalPnl >= 0 ? roundedTotalPnl : -roundedTotalPnl;
-};
-
+  };
 
   // Example usage with 2 decimal places
   const result = calculateTodayProfit();
   console.log(result);
 
   const todayProfitOrLoss = calculateTodayProfit();
-  console.log("todayProfitOrLoss",todayProfitOrLoss)
-  const data = [
-    {
-      title: "Today's Profit",
-      icon: (
-        <LiaCoinsSolid className="text-4xl flex lg:ml-40 ml-20 text-black" />
-      ),
-      bgColor: "bg-white",
-    },
-    {
-      title: "Last Login Info",
-      subtitle: (
-        <>
-          <span className="font-bold">Time:</span> 2024-01-27 13:15:50
-          <br />
-          <span className="font-bold">Time:</span> windows
-        </>
-      ),
-      icon: <LiaUnlockAltSolid className="text-4xl lg:ml-20 ml-0 text-black" />,
-      bgColor: "bg-white",
-    },
-    {
-      title: "Your Active Plan",
-      subtitle: "PREMIUM",
-      icon: <BsCupHot className="text-4xl lg:ml-40 ml-24" />,
-      bgColor: "bg-white text-black",
-    },
-    {
-      title: "Support",
-      icon: (
-        <MdMailOutline className="text-4xl lg:ml-44 ml-[110px] text-white" />
-      ),
-      bgColor: "bg-[#5957ea]",
-      style: {
-        color: "white",
-      },
-    },
-  ];
+  console.log("todayProfitOrLoss", todayProfitOrLoss);
+
 
   return (
     <>
@@ -260,7 +213,9 @@ const AdminDashboard = () => {
               >
                 <FaBars className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Dashboard
                   </span>
                 )}
@@ -275,7 +230,9 @@ const AdminDashboard = () => {
               >
                 <LiaChessKnightSolid className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     My Strategies
                   </span>
                 )}
@@ -290,7 +247,9 @@ const AdminDashboard = () => {
               >
                 <LiaChessSolid className=" mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Strategy Hub
                   </span>
                 )}
@@ -304,7 +263,9 @@ const AdminDashboard = () => {
               >
                 <LiaShoppingBagSolid className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Order
                   </span>
                 )}
@@ -317,7 +278,9 @@ const AdminDashboard = () => {
               >
                 <LiaReceiptSolid className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Position
                   </span>
                 )}
@@ -332,7 +295,7 @@ const AdminDashboard = () => {
                 {isSidebarOpen && (
                   <span
                     className="z-10"
-                    style={{ fontFamily: "PT Sans, sans-serif" }}
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
                   >
                     Errors
                   </span>
@@ -349,7 +312,9 @@ const AdminDashboard = () => {
               >
                 <LiaLinkSolid className=" mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Broker
                   </span>
                 )}
@@ -362,7 +327,9 @@ const AdminDashboard = () => {
               >
                 <LiaUserTieSolid className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Profile
                   </span>
                 )}
@@ -379,8 +346,8 @@ const AdminDashboard = () => {
               }`}
             >
               <button
-                style={{ fontFamily: "PT Sans, sans-serif" }}
-                className="flex text-xl py-1 rounded-lg font-bold mb-2"
+                style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                className="flex text-xl py-1 mt-5 rounded-lg font-bold mb-2"
                 onClick={toggleSidebar}
               >
                 <FaBars className="text-xl mr-2 mt-1" />
@@ -430,80 +397,88 @@ const AdminDashboard = () => {
             }`}
           >
             <div className="flex-1 mt-16 flex-col overflow-y-scroll transition-all">
-              <div className="flex flex-col lg:flex-row justify-between gap-2 p-5">
-                {data.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`w-full flex ${item.bgColor} p-5 sm:w-full md:w-full lg:w-full`}
-                    style={{ width: "309px", height: "128px" }}
-                  >
-                    <div
-                      className={
-                        index === 3 && item.style ? "text-white" : "text-black"
-                      }
-                    >
-                      <p
-                        className={`font-bold text-sm ${
-                          index !== 1 ? "mt-2" : ""
-                        }`}
-                      >
-                        {index === 1 ? (
-                          <>
-                            <span
-                              className="font-bold "
-                              style={{ fontSize: "10px" }}
-                            >
-                              Time:
-                            </span>{" "}
-                            <span
-                              className="block sm:inline"
-                              style={{ fontSize: "10px" }}
-                            >
-                              2024-01-27 13:15:50
-                            </span>
-                            <br className="hidden lg:block" />
-                            <span
-                              className="font-bold text-sm"
-                              style={{ fontSize: "10px" }}
-                            >
-                              Device:
-                            </span>
-                            <span style={{ fontSize: "10px" }}> windows</span>
-                          </>
-                        ) : (
-                          <>
-                            {item.subtitle}
-                            {index === 0 && (
-                              <span
-                                style={{
-                                  color:
-                                    todayProfitOrLoss < 0 ? "red" : "green",
-                                  fontSize: "2xl", 
-                                }}
-                              >
-                                {todayProfitOrLoss < 0 ? "-" : ""}
-                                {Math.abs(todayProfitOrLoss)}
-                              </span>
-                            )}
-                          </>
-                        )}
-                      </p>
-                      {index !== 2 && (
-                        <p className="text-[10px] font-bold mb-5 lg:mb-0">
-                          {item.title}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex justify-end items-center">
-                      {item.icon}
-                    </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 p-5">
+                <div className="bg-white flex  w-[309px] h-[128px]">
+                  <div className=" m-6 w-1/2 my-10">
+                    <h3
+                      style={{
+                        color: todayProfitOrLoss < 0 ? "red" : "#82d616",
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontSize:'18.72px', 
+                        fontWeight: "bold",
+                      }}
+                    >{todayProfitOrLoss < 0 ? "-" : ""}
+                    {Math.abs(todayProfitOrLoss)}</h3>
+                    <span className="text-[#8390A2]" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'13px'  }}>Today's Profit</span>
                   </div>
-                ))}
+                  <div className="w-1/2 flex justify-end my-10 mx-5">
+                  <LiaCoinsSolid className=" text-4xl  text-black" />
+                  </div>
+                </div>
+                <div className="bg-white flex  w-[309px] h-[128px]">
+                  <div className=" m-6 w-1/2 flex flex-col justify-center my-10">
+                    <h3 className="text-black font-bold" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'13px'  }}>Time:<span className="font-bold" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'10px'}} >2024-01-31 17:43:36</span></h3>
+                        <p className="text-black font-bold" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'13px'  }}>Device:<span className="font-bold" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'10px'}} >Windows</span></p>
+                        <span className="text-[#8390A2]" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'13px'  }}>Last Login Info</span>
+                  </div>
+                  <div className="w-1/2 flex justify-end my-10 mx-5">
+                  <LiaUnlockAltSolid className="text-4xl lg:ml-20 ml-0 text-black" />
+                  </div>
+                </div>
+                <div className="bg-white flex  w-[309px] h-[128px]">
+                  <div className=" m-6 w-1/2 my-10">
+                    <h3
+                      style={{
+                        color:'black',
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontSize:'18.72px', 
+                      }}
+                    >PREMIUM</h3>
+                    <span className="text-[#8390A2]" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'13px'  }}>Your Active Plan</span>
+                  </div>
+                  <div className="w-1/2 flex justify-end my-10 mx-5">
+                  <BsCupHot className="text-4xl text-black" />
+                  </div>
+                </div>
+                <div className="bg-[#5957ea] flex  w-[309px] h-[128px]">
+                  <div className=" m-6 w-1/2 my-10">
+                    <h3
+                      style={{
+                      
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontSize:'18.72px', 
+                      }}
+                    >Support</h3>
+                  </div>
+                  <div className="w-1/2 flex justify-end my-10 mx-5">
+                  <MdMailOutline className="text-4xl text-white" />
+                  </div>
+                </div>
+                
               </div>
               <div className="p-5 w-full h-screen ">
-                <div className="bg-white rounded-lg w-full overflow-y-scroll overflow-x-scroll h-[600px]">
+                <div className="bg-white rounded-lg w-full overflow-y-scroll overflow-x-scroll h-[430px]">
                   <div className=" lg:w-full flex border w-[700px] shadow-lg p-5  font-bold">
-                    <h1 className="text-black text-xl mt-2 ">Recent Trades</h1>
+                    <p
+                      style={{
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontWeight: "bold",
+                      }}
+                      className="text-black text-2xl mt-2 "
+                    >
+                      Recent Trades
+                    </p>
                     <button
                       className="bg-red-500 mt-2 text-sm rounded-xl ml-5 border text-white px-3 hover:bg-white hover:text-black"
                       onClick={openModal}
@@ -653,46 +628,155 @@ const AdminDashboard = () => {
                   </Modal>
                   <div className="p-3">
                     <table className=" w-full">
-                      <thead>
+                      <thead className="w-full">
                         <tr className="hover:bg-blue-200">
-                          <th className="p-2 text-black font-bold">Strategy</th>
-                          <th className="p-2 text-black font-bold">Script</th>
-                          <th className="p-2 text-black font-bold">Qty</th>
-                          <th className="p-2 text-black font-bold">Side</th>
-                          <th className="p-2 text-black font-bold">
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Strategy
+                          </th>
+
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Script
+                          </th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Qty
+                          </th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Side
+                          </th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
                             Entry Price
                           </th>
-                          <th className="p-2 text-black font-bold">
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
                             Exit Price
                           </th>
-                          <th className="p-2 text-black font-bold">Pnl</th>
-                          <th className="p-2 text-black font-bold">Status</th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Pnl
+                          </th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Status
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
                         {entryData.entry.map((e) => (
-                          <tr key={e._id} className="border hover:bg-blue-300">
-                            <td className="p-2 text-black text-center">
+                          <tr key={e._id} className=" hover:bg-blue-200">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.Stratergy}
                             </td>
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.Script}
                             </td>
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.Qty}
                             </td>
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.Side}
                             </td>
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.EntryPrice}
                             </td>
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.ExitPrice}
                             </td>
-                            <td>
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                            >
                               <div
-                                className={`text-center ${
+                                className={`text-center p-1 ${
                                   Number(e.Pnl) < 0
                                     ? "text-white bg-red-600 h-[25px] rounded-full"
                                     : "text-white bg-green-500 h-[25px] rounded-full"
@@ -702,38 +786,50 @@ const AdminDashboard = () => {
                               </div>
                             </td>
 
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.Status}
                             </td>
                             <td>
-                              <button onClick={()=>{entryData.setId(e._id),openModal()}} className="text-white bg-blue-400 border rounded-lg px-2  ">
+                              <button
+                                onClick={() => {
+                                  entryData.setId(e._id), openModal();
+                                }}
+                                className="text-white bg-blue-400 border rounded-lg px-2  "
+                              >
                                 Edit
                               </button>
                             </td>
                             <td>
-                              {entryData.isAdminAuthenticated &&(
-                              <button
-                                onClick={async () => {
-                                  const res = await entryData.DeleteEntry(
-                                    e._id
-                                  );
-                                  console.log("Entry Deleted", res);
-                                  toast.success(`${res.message}`, {
-                                    position: "top-right",
-                                    autoClose: 3000,
-                                    hideProgressBar: false,
-                                    closeOnClick: true,
-                                    pauseOnHover: true,
-                                    draggable: true,
-                                    progress: undefined,
-                                    theme: "light",
-                                  });
-                                  entryData.setReload(!entryData.reload);
-                                }}
-                                className="text-white bg-red-500 text-3xl border rounded-lg  "
-                              >
-                                <RiDeleteBinLine />
-                              </button>
+                              {entryData.isAdminAuthenticated && (
+                                <button
+                                  onClick={async () => {
+                                    const res = await entryData.DeleteEntry(
+                                      e._id
+                                    );
+                                    console.log("Entry Deleted", res);
+                                    toast.success(`${res.message}`, {
+                                      position: "top-right",
+                                      autoClose: 3000,
+                                      hideProgressBar: false,
+                                      closeOnClick: true,
+                                      pauseOnHover: true,
+                                      draggable: true,
+                                      progress: undefined,
+                                      theme: "light",
+                                    });
+                                    entryData.setReload(!entryData.reload);
+                                  }}
+                                  className="text-white bg-red-500 text-3xl border rounded-lg  "
+                                >
+                                  <RiDeleteBinLine />
+                                </button>
                               )}
                             </td>
                           </tr>

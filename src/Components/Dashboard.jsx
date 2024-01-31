@@ -29,56 +29,20 @@ const Dashboard = () => {
   };
   const calculateTodayProfit = (r, decimalPlaces = 2) => {
     const totalPnl = entryData.entry.reduce((acc, item) => {
-        r;
-        const pnlValue = parseFloat(item.Pnl);
-        return !isNaN(pnlValue) ? acc + pnlValue : acc;
+      r;
+      const pnlValue = parseFloat(item.Pnl);
+      return !isNaN(pnlValue) ? acc + pnlValue : acc;
     }, 0);
 
     const roundedTotalPnl = Number(Math.abs(totalPnl).toFixed(decimalPlaces));
-    
+
     // Check the sign of totalPnl and adjust accordingly
     return totalPnl >= 0 ? roundedTotalPnl : -roundedTotalPnl;
-};
+  };
 
   const todayProfitOrLoss = calculateTodayProfit();
   const isProfit = todayProfitOrLoss >= 0;
-  const data = [
-    {
-      title: "Today's Profit",
-      icon: (
-        <LiaCoinsSolid className="text-4xl flex lg:ml-40 ml-20 text-black" />
-      ),
-      bgColor: "bg-white",
-    },
-    {
-      title: "Last Login Info",
-      subtitle: (
-        <>
-          <span className="font-bold">Time:</span> 2024-01-27 13:15:50
-          <br />
-          <span className="font-bold">Time:</span> windows
-        </>
-      ),
-      icon: <LiaUnlockAltSolid className="text-4xl lg:ml-20 ml-0 text-black" />,
-      bgColor: "bg-white",
-    },
-    {
-      title: "Your Active Plan",
-      subtitle: "PREMIUM",
-      icon: <BsCupHot className="text-4xl lg:ml-40 ml-24" />,
-      bgColor: "bg-white text-black",
-    },
-    {
-      title: "Support",
-      icon: (
-        <MdMailOutline className="text-4xl lg:ml-44 ml-[110px] text-white" />
-      ),
-      bgColor: "bg-[#5957ea]",
-      style: {
-        color: "white",
-      },
-    },
-  ];
+
 
   return (
     <>
@@ -106,7 +70,9 @@ const Dashboard = () => {
               >
                 <FaBars className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Dashboard
                   </span>
                 )}
@@ -121,7 +87,9 @@ const Dashboard = () => {
               >
                 <LiaChessKnightSolid className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     My Strategies
                   </span>
                 )}
@@ -136,7 +104,9 @@ const Dashboard = () => {
               >
                 <LiaChessSolid className=" mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Strategy Hub
                   </span>
                 )}
@@ -150,7 +120,9 @@ const Dashboard = () => {
               >
                 <LiaShoppingBagSolid className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Order
                   </span>
                 )}
@@ -163,7 +135,9 @@ const Dashboard = () => {
               >
                 <LiaReceiptSolid className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Position
                   </span>
                 )}
@@ -178,7 +152,7 @@ const Dashboard = () => {
                 {isSidebarOpen && (
                   <span
                     className="z-10"
-                    style={{ fontFamily: "PT Sans, sans-serif" }}
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
                   >
                     Errors
                   </span>
@@ -195,7 +169,9 @@ const Dashboard = () => {
               >
                 <LiaLinkSolid className=" mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Broker
                   </span>
                 )}
@@ -208,7 +184,9 @@ const Dashboard = () => {
               >
                 <LiaUserTieSolid className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span style={{ fontFamily: "PT Sans, sans-serif" }}>
+                  <span
+                    style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
+                  >
                     Profile
                   </span>
                 )}
@@ -251,12 +229,16 @@ const Dashboard = () => {
               )}
 
               {entryData.isAuthenticated && (
-                <Link to={"/"} onClick={entryData.Logout} className="ml-10 mr-20 lg:mr-10 text-sm">
+                <Link
+                  to={"/"}
+                  onClick={entryData.Logout}
+                  className="ml-10 mr-20 lg:mr-10 text-sm"
+                >
                   Logout
                 </Link>
               )}
               {!entryData.isAuthenticated && (
-                <Link to={"/"}  className="ml-10 mr-20 lg:mr-20 p-2 text-sm">
+                <Link to={"/"} className="ml-10 mr-20 lg:mr-20 p-2 text-sm">
                   login
                 </Link>
               )}
@@ -267,120 +249,238 @@ const Dashboard = () => {
               isSidebarOpen ? "ml-0" : "ml-0"
             }`}
           >
-            <div className="flex-1 mt-16 flex-col overflow-y-scroll transition-all">
-              <div className="flex flex-col sm:flex-row justify-between gap-2 p-5">
-                {data.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`w-full flex ${item.bgColor} p-5 sm:w-full md:w-full lg:w-full`}
-                    style={{ width: "309px", height: "128px" }}
-                  >
-                    <div
-                      className={
-                        index === 3 && item.style ? "text-white" : "text-black"
-                      }
-                    >
-                      <p
-                        className={`font-bold text-sm ${
-                          index !== 1 ? "mt-2" : ""
-                        }`}
-                      >
-                        {index === 1 ? (
-                          <>
-                            <span
-                              className="font-bold "
-                              style={{ fontSize: "10px" }}
-                            >
-                              Time:
-                            </span>{" "}
-                            <span
-                              className="block sm:inline"
-                              style={{ fontSize: "10px" }}
-                            >
-                              2024-01-27 13:15:50
-                            </span>
-                            <br className="hidden lg:block" />
-                            <span
-                              className="font-bold text-sm"
-                              style={{ fontSize: "10px" }}
-                            >
-                              Device:
-                            </span>
-                            <span style={{ fontSize: "10px" }}> windows</span>
-                          </>
-                        ) : (
-                          <>
-                            {item.subtitle}
-                            {index === 0 && (
-                              <span
-                                style={{ color: isProfit ? "green" : "red" }}
-                                className="text-2xl"
-                              >
-                                {Math.abs(todayProfitOrLoss)}
-                              </span>
-                            )}
-                          </>
-                        )}
-                      </p>
-                      {index !== 2 && (
-                        <p className="text-[10px] font-bold mb-5 lg:mb-0">
-                          {item.title}
-                        </p>
-                      )}
-                    </div>
-                    <div className="flex justify-end items-center">
-                      {item.icon}
-                    </div>
+            <div className="flex-1  flex-col overflow-y-scroll transition-all">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 p-5">
+                <div className="bg-white flex  w-[309px] h-[128px]">
+                  <div className=" m-6 w-1/2 my-10">
+                    <h3
+                      style={{
+                        color: todayProfitOrLoss < 0 ? "red" : "#82d616",
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontSize:'18.72px', 
+                        fontWeight: "bold",
+                      }}
+                    >{todayProfitOrLoss < 0 ? "-" : ""}
+                    {Math.abs(todayProfitOrLoss)}</h3>
+                    <span className="text-[#8390A2]" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'13px'  }}>Today's Profit</span>
                   </div>
-                ))}
+                  <div className="w-1/2 flex justify-end my-10 mx-5">
+                  <LiaCoinsSolid className=" text-4xl  text-black" />
+                  </div>
+                </div>
+                <div className="bg-white flex  w-[309px] h-[128px]">
+                  <div className=" m-6 w-1/2 flex flex-col justify-center my-10">
+                    <h3 className="text-black font-bold" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'13px'  }}>Time:<span className="font-bold" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'10px'}} >2024-01-31 17:43:36</span></h3>
+                        <p className="text-black font-bold" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'13px'  }}>Device:<span className="font-bold" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'10px'}} >Windows</span></p>
+                        <span className="text-[#8390A2]" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'13px'  }}>Last Login Info</span>
+                  </div>
+                  <div className="w-1/2 flex justify-end my-10 mx-5">
+                  <LiaUnlockAltSolid className="text-4xl lg:ml-20 ml-0 text-black" />
+                  </div>
+                </div>
+                <div className="bg-white flex  w-[309px] h-[128px]">
+                  <div className=" m-6 w-1/2 my-10">
+                    <h3
+                      style={{
+                        color:'black',
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontSize:'18.72px', 
+                      }}
+                    >PREMIUM</h3>
+                    <span className="text-[#8390A2]" style={{fontFamily: "Poppins",
+                        sansSerif: "sans-serif",fontSize:'13px'  }}>Your Active Plan</span>
+                  </div>
+                  <div className="w-1/2 flex justify-end my-10 mx-5">
+                  <BsCupHot className="text-4xl text-black" />
+                  </div>
+                </div>
+                <div className="bg-[#5957ea] flex  w-[309px] h-[128px]">
+                  <div className=" m-6 w-1/2 my-10">
+                    <h3
+                      style={{
+                      
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontSize:'18.72px', 
+                      }}
+                    >Support</h3>
+                  </div>
+                  <div className="w-1/2 flex justify-end my-10 mx-5">
+                  <MdMailOutline className="text-4xl text-white" />
+                  </div>
+                </div>
               </div>
               <div className="p-5 w-full h-screen ">
                 <div className="bg-white rounded-lg w-full overflow-y-scroll overflow-x-scroll h-[600px]">
-                  <h1 className="text-black  lg:w-full border shadow-lg p-5 text-xl font-bold">
+                  <p
+                    style={{
+                      fontFamily: "Poppins",
+                      sansSerif: "sans-serif",
+                      fontWeight: "bolder",
+                    }}
+                    className="text-black text-xl mt-2 "
+                  >
                     Recent Trades
-                  </h1>
+                  </p>
                   <div className="p-3">
-                  <table className=" w-full">
+                    <table className=" w-full">
                       <thead>
                         <tr className="hover:bg-blue-200">
-                          <th className="p-2 text-black font-bold">Strategy</th>
-                          <th className="p-2 text-black font-bold">Script</th>
-                          <th className="p-2 text-black font-bold">Qty</th>
-                          <th className="p-2 text-black font-bold">Side</th>
-                          <th className="p-2 text-black font-bold">
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Strategy
+                          </th>
+
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Script
+                          </th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Qty
+                          </th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Side
+                          </th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
                             Entry Price
                           </th>
-                          <th className="p-2 text-black font-bold">
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
                             Exit Price
                           </th>
-                          <th className="p-2 text-black font-bold">Pnl</th>
-                          <th className="p-2 text-black font-bold">Status</th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Pnl
+                          </th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-black text-left font-bold"
+                          >
+                            Status
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
                         {entryData.entry.map((e) => (
                           <tr key={e._id} className="border hover:bg-blue-300">
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.Stratergy}
                             </td>
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.Script}
                             </td>
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.Qty}
                             </td>
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.Side}
                             </td>
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.EntryPrice}
                             </td>
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.ExitPrice}
                             </td>
-                            <td>
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                            >
                               <div
-                                className={`text-center ${
+                                className={`text-center p-1 ${
                                   Number(e.Pnl) < 0
                                     ? "text-white bg-red-600 h-[25px] rounded-full"
                                     : "text-white bg-green-500 h-[25px] rounded-full"
@@ -390,10 +490,16 @@ const Dashboard = () => {
                               </div>
                             </td>
 
-                            <td className="p-2 text-black text-center">
+                            <td
+                              style={{
+                                fontFamily: "Poppins",
+                                sansSerif: "sans-serif",
+                                fontSize: "13px",
+                              }}
+                              className="p-2 text-black"
+                            >
                               {e.Status}
                             </td>
-                            
                           </tr>
                         ))}
                       </tbody>
