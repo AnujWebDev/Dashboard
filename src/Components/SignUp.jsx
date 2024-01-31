@@ -131,7 +131,7 @@ const SignUp = () => {
 
           <p className="text-white text-sm mt-4">
             Already a member?{" "}
-            <Link to="/login" className="text-blue-500 underline">
+            <Link to="/" className="text-blue-500 underline">
               Login here
             </Link>
           </p>
