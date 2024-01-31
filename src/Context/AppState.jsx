@@ -12,7 +12,7 @@ const AppState = (props) => {
   const [user, setUser] = useState("");
   const [admin, setAdmin] = useState("");
 
-  const url = "https://dashboard-p2f2.vercel.app/api";
+  const url = "https://dashboard-backend-oyt9.onrender.com/api";
 
   useEffect(() => {
     const fetchEntries = async () => {
