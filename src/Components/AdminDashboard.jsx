@@ -141,7 +141,7 @@ const AdminDashboard = () => {
       closeModal();
     }
 
-    entryData.setId(" "); // Set id to null or an appropriate value after processing
+    entryData.setId(" ");
   };
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -165,26 +165,19 @@ const AdminDashboard = () => {
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);
   };
-  const calculateTodayProfit = (r, decimalPlaces = 2) => {
+  const calculateTodayProfit = (r) => {
+    if (!entryData.entry || entryData.entry.length === 0) {
+      return 0;
+    }
     const totalPnl = entryData.entry.reduce((acc, item) => {
-      r;
       const pnlValue = parseFloat(item.Pnl);
       return !isNaN(pnlValue) ? acc + pnlValue : acc;
     }, 0);
-
-    const roundedTotalPnl = Number(Math.abs(totalPnl).toFixed(decimalPlaces));
-
-    // Check the sign of totalPnl and adjust accordingly
+    const roundedTotalPnl = Number(Math.abs(totalPnl).toFixed(2));
     return totalPnl >= 0 ? roundedTotalPnl : -roundedTotalPnl;
   };
-
-  // Example usage with 2 decimal places
-  const result = calculateTodayProfit();
-  console.log(result);
-
   const todayProfitOrLoss = calculateTodayProfit();
   console.log("todayProfitOrLoss", todayProfitOrLoss);
-
 
   return (
     <>
@@ -405,66 +398,135 @@ const AdminDashboard = () => {
                         color: todayProfitOrLoss < 0 ? "#DC2626" : "#82d616",
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
-                        fontSize:'18.72px', 
+                        fontSize: "18.72px",
                         fontWeight: "bold",
                       }}
-                    >{todayProfitOrLoss < 0 ? "-" : ""}
-                    {Math.abs(todayProfitOrLoss)}</h3>
-                    <span className="text-[#8390A2]" style={{fontFamily: "Poppins",
-                        sansSerif: "sans-serif",fontSize:'13px'  }}>Today's Profit</span>
+                    >
+                      {todayProfitOrLoss !== 0 ? (
+                        <>
+                          {todayProfitOrLoss < 0 ? "-" : "+"}
+                          {Math.abs(todayProfitOrLoss)}
+                        </>
+                      ) : (
+                        "0"
+                      )}
+                    </h3>
+
+                    <span
+                      className="text-[#8390A2]"
+                      style={{
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Today's Profit
+                    </span>
                   </div>
                   <div className="w-1/2 flex justify-end my-10 mx-5">
-                  <LiaCoinsSolid className=" text-4xl  text-black" />
+                    <LiaCoinsSolid className=" text-4xl  text-black" />
                   </div>
                 </div>
                 <div className="bg-white flex  w-full h-[128px]">
                   <div className=" m-6 w-1/2 flex flex-col justify-center my-10">
-                    <h3 className="text-black font-bold" style={{fontFamily: "Poppins",
-                        sansSerif: "sans-serif",fontSize:'13px'  }}>Time:<span className="font-bold" style={{fontFamily: "Poppins",
-                        sansSerif: "sans-serif",fontSize:'10px'}} >2024-01-31 17:43:36</span></h3>
-                        <p className="text-black font-bold" style={{fontFamily: "Poppins",
-                        sansSerif: "sans-serif",fontSize:'13px'  }}>Device:<span className="font-bold" style={{fontFamily: "Poppins",
-                        sansSerif: "sans-serif",fontSize:'10px'}} >Windows</span></p>
-                        <span className="text-[#8390A2]" style={{fontFamily: "Poppins",
-                        sansSerif: "sans-serif",fontSize:'13px'  }}>Last Login Info</span>
+                    <h3
+                      className="text-black font-bold"
+                      style={{
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Time:
+                      <span
+                        className="font-bold"
+                        style={{
+                          fontFamily: "Poppins",
+                          sansSerif: "sans-serif",
+                          fontSize: "10px",
+                        }}
+                      >
+                        2024-01-31 17:43:36
+                      </span>
+                    </h3>
+                    <p
+                      className="text-black font-bold"
+                      style={{
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Device:
+                      <span
+                        className="font-bold"
+                        style={{
+                          fontFamily: "Poppins",
+                          sansSerif: "sans-serif",
+                          fontSize: "10px",
+                        }}
+                      >
+                        Windows
+                      </span>
+                    </p>
+                    <span
+                      className="text-[#8390A2]"
+                      style={{
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Last Login Info
+                    </span>
                   </div>
                   <div className="w-1/2 flex justify-end my-10 mx-5">
-                  <LiaUnlockAltSolid className="text-4xl text-black" />
+                    <LiaUnlockAltSolid className="text-4xl text-black" />
                   </div>
                 </div>
                 <div className="bg-white flex  w-full h-[128px]">
-                  <div className=" m-6 w-1/2 my-10">
+                  <div className=" m-6 w-1/2 my-5">
                     <h3
                       style={{
-                        color:'black',
+                        color: "black",
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
-                        fontSize:'18.72px', 
+                        fontSize: "18.72px",
                       }}
-                    >PREMIUM</h3>
-                    <span className="text-[#8390A2]" style={{fontFamily: "Poppins",
-                        sansSerif: "sans-serif",fontSize:'13px'  }}>Your Active Plan</span>
+                    >
+                      PREMIUM
+                    </h3>
+                    <span
+                      className="text-[#8390A2]"
+                      style={{
+                        fontFamily: "Poppins",
+                        sansSerif: "sans-serif",
+                        fontSize: "13px",
+                      }}
+                    >
+                      Your Active Plan
+                    </span>
                   </div>
                   <div className="w-1/2 flex justify-end my-10 mx-5">
-                  <BsCupHot className="text-4xl text-black" />
+                    <BsCupHot className="text-4xl text-black" />
                   </div>
                 </div>
                 <div className="bg-[#5957ea] flex  w-full h-[128px]">
-                  <div className=" m-6 w-1/2 my-10">
+                  <div className=" m-6 w-1/2 my-5">
                     <h3
                       style={{
-                      
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
-                        fontSize:'18.72px', 
+                        fontSize: "18.72px",
                       }}
-                    >Support</h3>
+                    >
+                      Support
+                    </h3>
                   </div>
                   <div className="w-1/2 flex justify-end my-10 mx-5">
-                  <MdMailOutline className="text-4xl text-white" />
+                    <MdMailOutline className="text-4xl text-white" />
                   </div>
                 </div>
-                
               </div>
               <div className="p-5 w-full h-screen ">
                 <div className="bg-white rounded-lg w-full overflow-y-scroll overflow-x-scroll h-[430px]">
@@ -627,6 +689,9 @@ const AdminDashboard = () => {
                     </form>
                   </Modal>
                   <div className="p-3">
+                          {entryData &&
+                          entryData.entry &&
+                          entryData.entry.length > 0 ? (
                     <table className=" w-full">
                       <thead className="w-full">
                         <tr className="hover:bg-blue-200">
@@ -706,136 +771,139 @@ const AdminDashboard = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {entryData.entry.map((e) => (
-                          <tr key={e._id} className=" hover:bg-blue-200">
-                            <td
-                              style={{
-                                fontFamily: "Poppins",
-                                sansSerif: "sans-serif",
-                                fontSize: "13px",
-                              }}
-                              className="p-2 text-black"
-                            >
-                              {e.Stratergy}
-                            </td>
-                            <td
-                              style={{
-                                fontFamily: "Poppins",
-                                sansSerif: "sans-serif",
-                                fontSize: "13px",
-                              }}
-                              className="p-2 text-black"
-                            >
-                              {e.Script}
-                            </td>
-                            <td
-                              style={{
-                                fontFamily: "Poppins",
-                                sansSerif: "sans-serif",
-                                fontSize: "13px",
-                              }}
-                              className="p-2 text-black"
-                            >
-                              {e.Qty}
-                            </td>
-                            <td
-                              style={{
-                                fontFamily: "Poppins",
-                                sansSerif: "sans-serif",
-                                fontSize: "13px",
-                              }}
-                              className="p-2 text-black"
-                            >
-                              {e.Side}
-                            </td>
-                            <td
-                              style={{
-                                fontFamily: "Poppins",
-                                sansSerif: "sans-serif",
-                                fontSize: "13px",
-                              }}
-                              className="p-2 text-black"
-                            >
-                              {e.EntryPrice}
-                            </td>
-                            <td
-                              style={{
-                                fontFamily: "Poppins",
-                                sansSerif: "sans-serif",
-                                fontSize: "13px",
-                              }}
-                              className="p-2 text-black"
-                            >
-                              {e.ExitPrice}
-                            </td>
-                            <td
-                              style={{
-                                fontFamily: "Poppins",
-                                sansSerif: "sans-serif",
-                                fontSize: "13px",
-                              }}
-                            >
-                              <div
-                                className={`text-center p-1 ${
-                                  Number(e.Pnl) < 0
-                                    ? "text-white bg-[#DC2626] h-[25px] rounded-full"
-                                    : "text-white bg-[#22C55E] h-[25px] rounded-full"
-                                }`}
-                              >
-                                {Number(e.Pnl).toFixed(2)}
-                              </div>
-                            </td>
-
-                            <td
-                              style={{
-                                fontFamily: "Poppins",
-                                sansSerif: "sans-serif",
-                                fontSize: "13px",
-                              }}
-                              className="p-2 text-black"
-                            >
-                              {e.Status}
-                            </td>
-                            <td>
-                              <button
-                                onClick={() => {
-                                  entryData.setId(e._id), openModal();
+                          {entryData.entry.map((e) => (
+                            <tr key={e._id} className="hover:bg-blue-200">
+                              <td
+                                style={{
+                                  fontFamily: "Poppins",
+                                  sansSerif: "sans-serif",
+                                  fontSize: "13px",
                                 }}
-                                className="text-white bg-blue-400 border rounded-lg px-2  "
+                                className="p-2 text-black"
                               >
-                                Edit
-                              </button>
-                            </td>
-                            <td>
-                              {entryData.isAdminAuthenticated && (
-                                <button
-                                  onClick={async () => {
-                                    const res = await entryData.DeleteEntry(
-                                      e._id
-                                    );
-                                    console.log("Entry Deleted", res);
-                                    toast.success(`${res.message}`, {
-                                      position: "top-right",
-                                      autoClose: 3000,
-                                      hideProgressBar: false,
-                                      closeOnClick: true,
-                                      pauseOnHover: true,
-                                      draggable: true,
-                                      progress: undefined,
-                                      theme: "light",
-                                    });
-                                    entryData.setReload(!entryData.reload);
-                                  }}
-                                  className="text-white bg-red-500 text-3xl border rounded-lg  "
+                                {e.Stratergy}
+                              </td>
+                              <td
+                                style={{
+                                  fontFamily: "Poppins",
+                                  sansSerif: "sans-serif",
+                                  fontSize: "13px",
+                                }}
+                                className="p-2 text-black"
+                              >
+                                {e.Script}
+                              </td>
+                              <td
+                                style={{
+                                  fontFamily: "Poppins",
+                                  sansSerif: "sans-serif",
+                                  fontSize: "13px",
+                                }}
+                                className="p-2 text-black"
+                              >
+                                {e.Qty}
+                              </td>
+                              <td
+                                style={{
+                                  fontFamily: "Poppins",
+                                  sansSerif: "sans-serif",
+                                  fontSize: "13px",
+                                }}
+                                className="p-2 text-black"
+                              >
+                                {e.Side}
+                              </td>
+                              <td
+                                style={{
+                                  fontFamily: "Poppins",
+                                  sansSerif: "sans-serif",
+                                  fontSize: "13px",
+                                }}
+                                className="p-2 text-black"
+                              >
+                                {e.EntryPrice}
+                              </td>
+                              <td
+                                style={{
+                                  fontFamily: "Poppins",
+                                  sansSerif: "sans-serif",
+                                  fontSize: "13px",
+                                }}
+                                className="p-2 text-black"
+                              >
+                                {e.ExitPrice}
+                              </td>
+                              <td>
+                                <div
+                                  className={`text-center ${
+                                    Number(e.Pnl) < 0
+                                      ? "text-white bg-[#DC2626] h-[25px] rounded-full"
+                                      : "text-white bg-[#22C55E] h-[25px] rounded-full"
+                                  }`}
                                 >
-                                  <RiDeleteBinLine />
+                                  {Number(e.Pnl).toFixed(2)}
+                                </div>
+                              </td>
+                              <td
+                                style={{
+                                  fontFamily: "Poppins",
+                                  sansSerif: "sans-serif",
+                                  fontSize: "13px",
+                                }}
+                                className="p-2 text-black"
+                              >
+                                {e.Status}
+                              </td>
+                              <td>
+                                <button
+                                  onClick={() => {
+                                    entryData.setId(e._id);
+                                    openModal();
+                                  }}
+                                  className="text-white bg-blue-400 border rounded-lg px-2"
+                                >
+                                  Edit
                                 </button>
-                              )}
-                            </td>
-                          </tr>
-                        ))}
+                              </td>
+                              <td>
+                                {entryData.isAdminAuthenticated && (
+                                  <button
+                                    onClick={async () => {
+                                      const res = await entryData.DeleteEntry(
+                                        e._id
+                                      );
+                                      console.log("Entry Deleted", res);
+                                      toast.success(`${res.message}`, {
+                                        position: "top-right",
+                                        autoClose: 3000,
+                                        hideProgressBar: false,
+                                        closeOnClick: true,
+                                        pauseOnHover: true,
+                                        draggable: true,
+                                        progress: undefined,
+                                        theme: "light",
+                                      });
+                                      entryData.setReload(!entryData.reload);
+                                    }}
+                                    className="text-white bg-red-500 text-3xl border rounded-lg"
+                                  >
+                                    <RiDeleteBinLine />
+                                  </button>
+                                )}
+                              </td>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
+                        ) : (
+                          <div style={{
+                            fontFamily: "Poppins",
+                            sansSerif: "sans-serif",
+                          }} className="w-full text-center text-2xl text-black  p-4">
+                            No entries today
+                          </div>
+                        )}
+
                     <div className="h-[600px]"></div>
                   </div>
                 </div>
