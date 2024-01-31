@@ -41,7 +41,7 @@ const AdminDashboard = () => {
   const [Side, setSide] = useState("BUY");
   const [EntryPrice, setEntryPrice] = useState(0);
   const [ExitPrice, setExitPrice] = useState(0);
-  const [Status, setStatus] = useState("Open");
+  const [Status, setStatus] = useState("CLOSED");
 
   useEffect(() => {
     const fetchEntryBYId = async () => {
@@ -396,13 +396,13 @@ const AdminDashboard = () => {
               isSidebarOpen ? "ml-0" : "ml-0"
             }`}
           >
-            <div className="flex-1 mt-16 flex-col overflow-y-scroll transition-all">
+            <div className="flex-1 mt-24 flex-col overflow-y-scroll transition-all">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 p-5">
-                <div className="bg-white flex  w-[309px] h-[128px]">
+                <div className="bg-white flex w-full h-[128px]">
                   <div className=" m-6 w-1/2 my-10">
                     <h3
                       style={{
-                        color: todayProfitOrLoss < 0 ? "red" : "#82d616",
+                        color: todayProfitOrLoss < 0 ? "#DC2626" : "#82d616",
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
                         fontSize:'18.72px', 
@@ -417,7 +417,7 @@ const AdminDashboard = () => {
                   <LiaCoinsSolid className=" text-4xl  text-black" />
                   </div>
                 </div>
-                <div className="bg-white flex  w-[309px] h-[128px]">
+                <div className="bg-white flex  w-full h-[128px]">
                   <div className=" m-6 w-1/2 flex flex-col justify-center my-10">
                     <h3 className="text-black font-bold" style={{fontFamily: "Poppins",
                         sansSerif: "sans-serif",fontSize:'13px'  }}>Time:<span className="font-bold" style={{fontFamily: "Poppins",
@@ -429,10 +429,10 @@ const AdminDashboard = () => {
                         sansSerif: "sans-serif",fontSize:'13px'  }}>Last Login Info</span>
                   </div>
                   <div className="w-1/2 flex justify-end my-10 mx-5">
-                  <LiaUnlockAltSolid className="text-4xl lg:ml-20 ml-0 text-black" />
+                  <LiaUnlockAltSolid className="text-4xl text-black" />
                   </div>
                 </div>
-                <div className="bg-white flex  w-[309px] h-[128px]">
+                <div className="bg-white flex  w-full h-[128px]">
                   <div className=" m-6 w-1/2 my-10">
                     <h3
                       style={{
@@ -449,7 +449,7 @@ const AdminDashboard = () => {
                   <BsCupHot className="text-4xl text-black" />
                   </div>
                 </div>
-                <div className="bg-[#5957ea] flex  w-[309px] h-[128px]">
+                <div className="bg-[#5957ea] flex  w-full h-[128px]">
                   <div className=" m-6 w-1/2 my-10">
                     <h3
                       style={{
@@ -613,8 +613,8 @@ const AdminDashboard = () => {
                             onChange={(e) => setStatus(e.target.value)}
                             className="form-select mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
                           >
-                            <option value="Open">Open</option>
-                            <option value="Closed">Closed</option>
+                            <option value="CLOSED">CLOSED</option>
+                            <option value="OPEN">OPEN</option>
                           </select>
                         </label>
                       </div>
@@ -778,8 +778,8 @@ const AdminDashboard = () => {
                               <div
                                 className={`text-center p-1 ${
                                   Number(e.Pnl) < 0
-                                    ? "text-white bg-red-600 h-[25px] rounded-full"
-                                    : "text-white bg-green-500 h-[25px] rounded-full"
+                                    ? "text-white bg-[#DC2626] h-[25px] rounded-full"
+                                    : "text-white bg-[#22C55E] h-[25px] rounded-full"
                                 }`}
                               >
                                 {Number(e.Pnl).toFixed(2)}

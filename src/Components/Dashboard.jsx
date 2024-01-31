@@ -249,13 +249,13 @@ const Dashboard = () => {
               isSidebarOpen ? "ml-0" : "ml-0"
             }`}
           >
-            <div className="flex-1  flex-col overflow-y-scroll transition-all">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 p-5">
-                <div className="bg-white flex  w-[309px] h-[128px]">
+            <div className="flex-1  flex-col mt-24 overflow-y-scroll transition-all">
+            <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 p-5">
+                <div className="bg-white flex w-full h-[128px]">
                   <div className=" m-6 w-1/2 my-10">
                     <h3
                       style={{
-                        color: todayProfitOrLoss < 0 ? "red" : "#82d616",
+                        color: todayProfitOrLoss < 0 ? "#DC2626" : "#82d616",
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
                         fontSize:'18.72px', 
@@ -270,7 +270,7 @@ const Dashboard = () => {
                   <LiaCoinsSolid className=" text-4xl  text-black" />
                   </div>
                 </div>
-                <div className="bg-white flex  w-[309px] h-[128px]">
+                <div className="bg-white flex  w-full h-[128px]">
                   <div className=" m-6 w-1/2 flex flex-col justify-center my-10">
                     <h3 className="text-black font-bold" style={{fontFamily: "Poppins",
                         sansSerif: "sans-serif",fontSize:'13px'  }}>Time:<span className="font-bold" style={{fontFamily: "Poppins",
@@ -282,10 +282,10 @@ const Dashboard = () => {
                         sansSerif: "sans-serif",fontSize:'13px'  }}>Last Login Info</span>
                   </div>
                   <div className="w-1/2 flex justify-end my-10 mx-5">
-                  <LiaUnlockAltSolid className="text-4xl lg:ml-20 ml-0 text-black" />
+                  <LiaUnlockAltSolid className="text-4xl text-black" />
                   </div>
                 </div>
-                <div className="bg-white flex  w-[309px] h-[128px]">
+                <div className="bg-white flex  w-full h-[128px]">
                   <div className=" m-6 w-1/2 my-10">
                     <h3
                       style={{
@@ -302,7 +302,7 @@ const Dashboard = () => {
                   <BsCupHot className="text-4xl text-black" />
                   </div>
                 </div>
-                <div className="bg-[#5957ea] flex  w-[309px] h-[128px]">
+                <div className="bg-[#5957ea] flex  w-full h-[128px]">
                   <div className=" m-6 w-1/2 my-10">
                     <h3
                       style={{
@@ -317,6 +317,7 @@ const Dashboard = () => {
                   <MdMailOutline className="text-4xl text-white" />
                   </div>
                 </div>
+                
               </div>
               <div className="p-5 w-full h-screen ">
                 <div className="bg-white rounded-lg w-full overflow-y-scroll overflow-x-scroll h-[600px]">
@@ -367,7 +368,7 @@ const Dashboard = () => {
                               fontFamily: "Poppins",
                               sansSerif: "sans-serif",
                             }}
-                            className="p-2 text-black text-left font-bold"
+                            className="p-2 hidden text-black text-left font-bold"
                           >
                             Side
                           </th>
@@ -448,7 +449,7 @@ const Dashboard = () => {
                                 sansSerif: "sans-serif",
                                 fontSize: "13px",
                               }}
-                              className="p-2 text-black"
+                              className="p-2 hidden text-black"
                             >
                               {e.Side}
                             </td>
@@ -482,8 +483,8 @@ const Dashboard = () => {
                               <div
                                 className={`text-center p-1 ${
                                   Number(e.Pnl) < 0
-                                    ? "text-white bg-red-600 h-[25px] rounded-full"
-                                    : "text-white bg-green-500 h-[25px] rounded-full"
+                                    ? "text-white bg-[#DC2626] h-[25px] rounded-full"
+                                    : "text-white bg-[#22C55E] h-[25px] rounded-full"
                                 }`}
                               >
                                 {Number(e.Pnl).toFixed(2)}
