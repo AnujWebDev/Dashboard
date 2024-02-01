@@ -10,8 +10,8 @@ const AppState = (props) => {
   const [reload,setReload]=useState(false)
   const [id,setId]=useState('');
   const [user, setUser] = useState("");
-  const [admin, setAdmin] = useState(""); 
-
+  const [admin, setAdmin] = useState("");
+  const [AllUsers,setAllusers]=useState([])
   const url = "https://dashboard-backend-oyt9.onrender.com/api";
 
   useEffect(() => {
@@ -156,7 +156,7 @@ const AppState = (props) => {
       setUser(api.data.user);
     };
     myProfile();
-  }, [token]);
+  }, [token,reload]);
 
   useEffect(() => {
     const adminProfile = async () => {
@@ -221,7 +221,26 @@ const AppState = (props) => {
   }
 
 
-  console.log("id is coming",id)
+  // console.log("id is coming",id)
+
+  useEffect(() => {
+    const fetchAllUsers = async () => {
+      const api = await axios.get(`${url}/users`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+
+      setAllusers(api.data.user);
+    };
+    fetchAllUsers();
+
+    
+  }, [reload]);
+
+    
+
 
 
   return (
@@ -245,7 +264,8 @@ const AppState = (props) => {
         DeleteEntry,
         id,setId,
         url,
-        token
+        token,
+        AllUsers
       }}
     >
       {props.children}

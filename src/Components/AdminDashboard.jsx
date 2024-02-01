@@ -10,13 +10,15 @@ import { LiaUserTieSolid } from "react-icons/lia";
 import { LiaCoinsSolid } from "react-icons/lia";
 import { LiaUnlockAltSolid } from "react-icons/lia";
 import { MdMailOutline } from "react-icons/md";
-import { BsCupHot } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
 import Modal from "react-modal";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { LiaCoffeeSolid } from "react-icons/lia";
+import { LiaEnvelopeSolid } from "react-icons/lia";
+
 import axios from "axios";
 
 const customStyles = {
@@ -390,9 +392,9 @@ const AdminDashboard = () => {
             }`}
           >
             <div className="flex-1 mt-24 flex-col overflow-y-scroll transition-all">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 p-5">
+            <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5 p-5">
                 <div className="bg-white flex w-full h-[128px]">
-                  <div className=" m-6 w-1/2 my-10">
+                  <div className=" m-6 w-1/2 my-9">
                     <h3
                       style={{
                         color: todayProfitOrLoss < 0 ? "#DC2626" : "#82d616",
@@ -402,16 +404,9 @@ const AdminDashboard = () => {
                         fontWeight: "bold",
                       }}
                     >
-                      {todayProfitOrLoss !== 0 ? (
-                        <>
-                          {todayProfitOrLoss < 0 ? "-" : "+"}
-                          {Math.abs(todayProfitOrLoss)}
-                        </>
-                      ) : (
-                        "0"
-                      )}
+                      {todayProfitOrLoss < 0 ? "-" : "+"}
+                      {Math.abs(todayProfitOrLoss)}
                     </h3>
-
                     <span
                       className="text-[#8390A2]"
                       style={{
@@ -424,13 +419,13 @@ const AdminDashboard = () => {
                     </span>
                   </div>
                   <div className="w-1/2 flex justify-end my-10 mx-5">
-                    <LiaCoinsSolid className=" text-4xl  text-black" />
+                    <LiaCoinsSolid className=" text-5xl  text-black" />
                   </div>
                 </div>
                 <div className="bg-white flex  w-full h-[128px]">
-                  <div className=" m-6 w-1/2 flex flex-col justify-center my-10">
+                  <div className=" m-6 w-3/4 flex flex-col justify-center my-8">
                     <h3
-                      className="text-black font-bold"
+                      className="text-black font-semibold"
                       style={{
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
@@ -439,18 +434,19 @@ const AdminDashboard = () => {
                     >
                       Time:
                       <span
-                        className="font-bold"
+                        className=""
                         style={{
                           fontFamily: "Poppins",
                           sansSerif: "sans-serif",
-                          fontSize: "10px",
+                          fontSize: "11px",
+                          whiteSpace: "nowrap"
                         }}
                       >
                         2024-01-31 17:43:36
                       </span>
                     </h3>
                     <p
-                      className="text-black font-bold"
+                      className="text-black font-semibold"
                       style={{
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
@@ -459,11 +455,11 @@ const AdminDashboard = () => {
                     >
                       Device:
                       <span
-                        className="font-bold"
+                        className="font-semibold"
                         style={{
                           fontFamily: "Poppins",
                           sansSerif: "sans-serif",
-                          fontSize: "10px",
+                          fontSize: "12px",
                         }}
                       >
                         Windows
@@ -481,17 +477,17 @@ const AdminDashboard = () => {
                     </span>
                   </div>
                   <div className="w-1/2 flex justify-end my-10 mx-5">
-                    <LiaUnlockAltSolid className="text-4xl text-black" />
+                    <LiaUnlockAltSolid className="text-5xl text-black" />
                   </div>
                 </div>
                 <div className="bg-white flex  w-full h-[128px]">
-                  <div className=" m-6 w-1/2 my-5">
+                  <div className=" m-6 w-3/4 my-8">
                     <h3
                       style={{
                         color: "black",
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
-                        fontSize: "18.72px",
+                        fontSize: "14.72px",
                       }}
                     >
                       PREMIUM
@@ -508,23 +504,23 @@ const AdminDashboard = () => {
                     </span>
                   </div>
                   <div className="w-1/2 flex justify-end my-10 mx-5">
-                    <BsCupHot className="text-4xl text-black" />
+                    <LiaCoffeeSolid className="text-5xl text-black" />
                   </div>
                 </div>
                 <div className="bg-[#5957ea] flex  w-full h-[128px]">
-                  <div className=" m-6 w-1/2 my-5">
+                  <div className=" m-6 w-1/2 my-8">
                     <h3
                       style={{
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
-                        fontSize: "18.72px",
+                        fontSize: "14.72px",
                       }}
                     >
                       Support
                     </h3>
                   </div>
                   <div className="w-1/2 flex justify-end my-10 mx-5">
-                    <MdMailOutline className="text-4xl text-white" />
+                    <LiaEnvelopeSolid className="text-5xl text-white" />
                   </div>
                 </div>
               </div>
@@ -547,6 +543,11 @@ const AdminDashboard = () => {
                     >
                       Add Entry
                     </button>
+                    <Link to={'/allusers'}
+                      className="bg-red-500 mt-2 text-sm rounded-xl ml-5 border text-white px-3 pt-1 hover:bg-white hover:text-black"
+                    >
+                      All Users
+                    </Link>
                   </div>
                   <Modal
                     isOpen={modalIsOpen}
@@ -693,8 +694,8 @@ const AdminDashboard = () => {
                           entryData.entry &&
                           entryData.entry.length > 0 ? (
                     <table className=" w-full">
-                      <thead className="w-full">
-                        <tr className="hover:bg-blue-200">
+                      <thead className="w-full border-y hover:bg-blue-200">
+                        <tr className="">
                           <th
                             style={{
                               fontFamily: "Poppins",
@@ -767,6 +768,24 @@ const AdminDashboard = () => {
                             className="p-2 text-black text-left font-bold"
                           >
                             Status
+                          </th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-white text-left font-bold"
+                          >
+                            edit
+                          </th>
+                          <th
+                            style={{
+                              fontFamily: "Poppins",
+                              sansSerif: "sans-serif",
+                            }}
+                            className="p-2 text-white text-left font-bold"
+                          >
+                            delete
                           </th>
                         </tr>
                       </thead>
