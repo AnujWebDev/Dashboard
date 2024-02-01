@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
 import { LiaCoffeeSolid } from "react-icons/lia";
 import { LiaEnvelopeSolid } from "react-icons/lia";
-import profile from "../assets/profile.svg"
+import profile from "../assets/profile.svg";
 
 const Dashboard = () => {
   const entryData = useContext(AppContext);
@@ -21,6 +21,15 @@ const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
   const [numberOfErrors, setNumberOfErrors] = useState(0);
+  const [isLiveTrading, setLiveTrading] = useState(false);
+  const [isPaperTrading, setPaperTrading] = useState(false);
+
+  entryData.setReload(!entryData.reload);
+
+  const handleToggle = () => {
+    setLiveTrading(!isLiveTrading);
+    setPaperTrading(!isPaperTrading);
+  };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -29,16 +38,19 @@ const Dashboard = () => {
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);
   };
-  const calculateTodayProfit = (r) => {
+  const calculateTodayProfit = () => {
     if (!entryData.entry || entryData.entry.length === 0) {
       return 0;
     }
+
     const totalPnl = entryData.entry.reduce((acc, item) => {
       const pnlValue = parseFloat(item.Pnl);
       return !isNaN(pnlValue) ? acc + pnlValue : acc;
     }, 0);
-    const roundedTotalPnl = Number(Math.abs(totalPnl).toFixed(2));
-    return totalPnl >= 0 ? roundedTotalPnl : -roundedTotalPnl;
+
+    const roundedTotalPnl = Number(totalPnl.toFixed(2));
+
+    return roundedTotalPnl;
   };
 
   const todayProfitOrLoss = calculateTodayProfit();
@@ -183,44 +195,70 @@ const Dashboard = () => {
               >
                 <LiaUserTieSolid className="mr-4 text-2xl" />
                 {isSidebarOpen && (
-                  <span
+                  <Link
+                    to={"/userdetails"}
                     style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
                   >
                     Profile
-                  </span>
+                  </Link>
                 )}
+              </li>
+              <li>
+                <button
+                  className={`relative inline-block overflow-hidden w-full h-8 p-1 rounded-full ${
+                    isLiveTrading ? "bg-[#00ffdc]" : "bg-[#ea0606ba]"
+                  }`}
+                  onClick={handleToggle}
+                >
+                  <div
+                    className={`absolute left-[-5px] top-[0px] bg-white rounded-t-full w-36 h-full rounded-md transform overflow-hidden ${
+                      isLiveTrading ? "translate-x-full" : ""
+                    } transition-transform duration-300 ease-in-out`}
+                    style={{
+                      backgroundColor: isLiveTrading
+                        ? " #268f81 "
+                        : "#ea0606ba",
+                    }}
+                  >
+                    <span
+                      className={`absolute inset-0 flex items-center justify-center text-white`}
+                    >
+                      {isLiveTrading
+                        ? "Live trading is on"
+                        : "Paper trading is on"}
+                    </span>
+                  </div>
+                </button>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="flex flex-col  overflow-y-hidden flex-1">
-          <div className="flex fixed w-[95%] bg-[#15202b] z-50 border rounded-xl text-white justify-between">
+          <div className="flex fixed w-[95%] h-20 bg-[#15202b] z-50 border rounded-xl text-white justify-between">
             <div
               className={`flex-1 transition-all ${
-                isSidebarOpen ? "ml-2" : "ml-10"
+                isSidebarOpen ? "ml-2" : "ml-5"
               }`}
             >
               <button
                 style={{ fontFamily: "PT Sans, sans-serif" }}
-                className="flex text-xl py-1 rounded-lg font-bold mb-2"
+                className="flex text-2xl mt-5  rounded-lg font-bold mb-2"
                 onClick={toggleSidebar}
               >
-                <FaBars className="text-xl mr-2 mt-1" />
+                <FaBars className="text-2xl mr-2  mt-1" />
                 Dashboard
               </button>
             </div>
             <div
-              className={`flex flex-col items-center ${
-                isSidebarOpen ? "mr-52" : ""
-              }`}
+              className={`flex mt-3 flex-col r ${isSidebarOpen ? "mr-52" : ""}`}
             >
               {entryData.isAuthenticated && (
                 <>
                   <Link
-                    to={'/userdetails'}
+                    to={"/userdetails"}
                     style={{ fontFamily: "PT Sans, sans-serif" }}
-                    className="flex text-sm mr-10 p-3 py-1 rounded-lg font-bold mb-2"
+                    className="flex text-md mr-10  py-1 rounded-lg font-bold mb-2"
                   >
                     <LiaUserTieSolid className="text-2xl mr-3" />
                     {user?.name}
@@ -232,13 +270,13 @@ const Dashboard = () => {
                 <Link
                   to={"/"}
                   onClick={entryData.Logout}
-                  className="ml-10 mr-20 lg:mr-10 text-sm"
+                  className="ml-10 mr-20 relative top-[-10px] right-1 lg:mr-10 text-md"
                 >
                   Logout
                 </Link>
               )}
               {!entryData.isAuthenticated && (
-                <Link to={"/"} className="ml-10 mr-20 lg:mr-20 p-2 text-sm">
+                <Link to={"/"} className="ml-10 mr-20 lg:mr-20 p-2 text-xl">
                   login
                 </Link>
               )}
@@ -262,8 +300,8 @@ const Dashboard = () => {
                         fontWeight: "bold",
                       }}
                     >
-                      {todayProfitOrLoss < 0 ? "-" : "+"}
-                      {Math.abs(todayProfitOrLoss)}
+                      {todayProfitOrLoss < 0 ? "" : "+"}
+                      {todayProfitOrLoss.toFixed(1)}
                     </h3>
                     <span
                       className="text-[#8390A2]"
@@ -281,7 +319,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div className="bg-white flex  w-full h-[128px]">
-                  <div className=" m-6 w-3/4 flex flex-col justify-center my-8">
+                  <div className=" m-6 w-1/2 flex flex-col justify-center my-8">
                     <h3
                       className="text-black font-semibold"
                       style={{
@@ -297,7 +335,7 @@ const Dashboard = () => {
                           fontFamily: "Poppins",
                           sansSerif: "sans-serif",
                           fontSize: "11px",
-                          whiteSpace: "nowrap"
+                          whiteSpace: "nowrap",
                         }}
                       >
                         2024-01-31 17:43:36
@@ -429,15 +467,17 @@ const Dashboard = () => {
                             >
                               Qty
                             </th>
-                            <th
-                              style={{
-                                fontFamily: "Poppins",
-                                sansSerif: "sans-serif",
-                              }}
-                              className="p-2 hidden text-black text-left font-bold"
-                            >
-                              Side
-                            </th>
+                            {isLiveTrading && (
+                              <th
+                                style={{
+                                  fontFamily: "Poppins",
+                                  sansSerif: "sans-serif",
+                                }}
+                                className="p-2 text-black text-left font-bold"
+                              >
+                                Side
+                              </th>
+                            )}
                             <th
                               style={{
                                 fontFamily: "Poppins",
@@ -509,16 +549,19 @@ const Dashboard = () => {
                               >
                                 {e.Qty}
                               </td>
-                              <td
-                                style={{
-                                  fontFamily: "Poppins",
-                                  sansSerif: "sans-serif",
-                                  fontSize: "13px",
-                                }}
-                                className="p-2 hidden text-black"
-                              >
-                                {e.Side}
-                              </td>
+                              {isLiveTrading && (
+                                <td
+                                  style={{
+                                    fontFamily: "Poppins",
+                                    sansSerif: "sans-serif",
+                                    fontSize: "13px",
+                                  }}
+                                  className="p-2 text-black"
+                                >
+                                  {e.Side}
+                                </td>
+                              )}
+
                               <td
                                 style={{
                                   fontFamily: "Poppins",

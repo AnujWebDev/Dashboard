@@ -79,7 +79,7 @@ const AdminDashboard = () => {
       ExitPrice,
       Status
     );
-    if (entryData.id == " ") {
+    if(entryData.id === " ") {
       await entryData.addEntry({
         Stratergy,
         Script,
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
         entryData.setReload(!entryData.reload);
         console.log(api);
       };
-      updateEntry(entryData.id);
+     updateEntry(entryData.id);
       toast.success("Entry Edited Successfully", {
         position: "top-right",
         autoClose: 3000,
@@ -141,9 +141,10 @@ const AdminDashboard = () => {
         theme: "light",
       });
       closeModal();
+      
     }
-
     entryData.setId(" ");
+
   };
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -167,17 +168,23 @@ const AdminDashboard = () => {
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);
   };
-  const calculateTodayProfit = (r) => {
+  const calculateTodayProfit = () => {
     if (!entryData.entry || entryData.entry.length === 0) {
-      return 0;
+        return 0;
     }
+    
     const totalPnl = entryData.entry.reduce((acc, item) => {
-      const pnlValue = parseFloat(item.Pnl);
-      return !isNaN(pnlValue) ? acc + pnlValue : acc;
+        const pnlValue = parseFloat(item.Pnl);
+        return !isNaN(pnlValue) ? acc + pnlValue : acc;
     }, 0);
-    const roundedTotalPnl = Number(Math.abs(totalPnl).toFixed(2));
-    return totalPnl >= 0 ? roundedTotalPnl : -roundedTotalPnl;
-  };
+    
+    const roundedTotalPnl = Number(totalPnl.toFixed(1));
+    
+    return roundedTotalPnl;
+};
+
+
+
   const todayProfitOrLoss = calculateTodayProfit();
   console.log("todayProfitOrLoss", todayProfitOrLoss);
 
@@ -334,18 +341,18 @@ const AdminDashboard = () => {
         </div>
 
         <div className="flex flex-col  overflow-y-hidden flex-1">
-          <div className="flex fixed w-[95%] bg-[#15202b] z-50 border rounded-xl text-white justify-between">
+        <div className="flex fixed w-[95%] h-20 bg-[#15202b] z-50 border rounded-xl text-white justify-between">
             <div
               className={`flex-1 transition-all ${
-                isSidebarOpen ? "ml-2" : "ml-10"
+                isSidebarOpen ? "ml-2" : "ml-5"
               }`}
             >
               <button
-                style={{ fontFamily: "Poppins", sansSerif: "sans-serif" }}
-                className="flex text-xl py-1 mt-5 rounded-lg font-bold mb-2"
+                style={{ fontFamily: "PT Sans, sans-serif" }}
+                className="flex text-2xl mt-5  rounded-lg font-bold mb-2"
                 onClick={toggleSidebar}
               >
-                <FaBars className="text-xl mr-2 mt-1" />
+                <FaBars className="text-2xl mr-2  mt-1" />
                 Dashboard
               </button>
             </div>
@@ -355,8 +362,8 @@ const AdminDashboard = () => {
               }`}
             >
               {entryData.isAdminAuthenticated && (
-                <div className="flex justify-end ">
-                  <LiaUserTieSolid className="text-2xl mr-3" />
+                <div className="flex justify-end  mt-2">
+                  <LiaUserTieSolid className="text-2xl mt-2" />
                   <Link
                     style={{ fontFamily: "PT Sans, sans-serif" }}
                     className="flex flex-col text-sm mr-10 p-3 py-1 rounded-lg font-bold mb-2"
@@ -404,8 +411,8 @@ const AdminDashboard = () => {
                         fontWeight: "bold",
                       }}
                     >
-                      {todayProfitOrLoss < 0 ? "-" : "+"}
-                      {Math.abs(todayProfitOrLoss)}
+                      {todayProfitOrLoss < 0 ? "" : "+"}
+                      {(todayProfitOrLoss).toFixed(1)}
                     </h3>
                     <span
                       className="text-[#8390A2]"
@@ -423,7 +430,7 @@ const AdminDashboard = () => {
                   </div>
                 </div>
                 <div className="bg-white flex  w-full h-[128px]">
-                  <div className=" m-6 w-3/4 flex flex-col justify-center my-8">
+                  <div className=" m-6 w-1/2 flex flex-col justify-center my-8">
                     <h3
                       className="text-black font-semibold"
                       style={{
@@ -539,7 +546,10 @@ const AdminDashboard = () => {
                     </p>
                     <button
                       className="bg-red-500 mt-2 text-sm rounded-xl ml-5 border text-white px-3 hover:bg-white hover:text-black"
-                      onClick={openModal}
+                      onClick={() => {
+                        entryData.setId(" ");
+                        openModal();
+                      }}
                     >
                       Add Entry
                     </button>
