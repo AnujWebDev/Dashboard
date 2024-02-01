@@ -239,9 +239,17 @@ const AppState = (props) => {
     
   }, [reload]);
 
-    
-
-
+  const getUserById=async(id)=>{
+    const api =await axios.get(`${url}/user/${id}`,{
+      headers: {
+        "Content-Type": "application/json",
+        Auth:token,
+      },
+      withCredentials: true,
+    })
+    console.log(api);
+    return api.data
+  }
 
   return (
     <AppContext.Provider
@@ -265,7 +273,8 @@ const AppState = (props) => {
         id,setId,
         url,
         token,
-        AllUsers
+        AllUsers,
+        getUserById
       }}
     >
       {props.children}

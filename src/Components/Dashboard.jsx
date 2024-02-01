@@ -348,7 +348,7 @@ const Dashboard = () => {
                         fontSize: "14.72px",
                       }}
                     >
-                      PREMIUM
+                      {user?.packages}
                     </h3>
                     <span
                       className="text-[#8390A2]"
