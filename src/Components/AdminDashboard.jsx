@@ -902,9 +902,10 @@ const AdminDashboard = () => {
                                         e._id
                                       );
                                       console.log("Entry Deleted", res);
+                                      console.log("deleted id",e._id)
                                       toast.success(`${res.message}`, {
                                         position: "top-right",
-                                        autoClose: 3000,
+                                        autoClose: 2000,
                                         hideProgressBar: false,
                                         closeOnClick: true,
                                         pauseOnHover: true,

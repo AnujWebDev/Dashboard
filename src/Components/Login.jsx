@@ -17,6 +17,7 @@ const Login = () => {
     e.preventDefault();
 
     const loginResult =await data.Login(email, password);
+    console.log()
         toast.success(loginResult.message, {
             position: "top-right",
             autoClose: 3000,

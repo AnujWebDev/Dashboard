@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaBars, FaChessKnight } from "react-icons/fa";
 import { LiaChessKnightSolid } from "react-icons/lia";
 import { LiaChessSolid } from "react-icons/lia";
@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
 import { LiaCoffeeSolid } from "react-icons/lia";
 import { LiaEnvelopeSolid } from "react-icons/lia";
-import profile from "../assets/profile.svg";
 
 const Dashboard = () => {
   const entryData = useContext(AppContext);
@@ -24,8 +23,8 @@ const Dashboard = () => {
   const [isLiveTrading, setLiveTrading] = useState(false);
   const [isPaperTrading, setPaperTrading] = useState(false);
 
-  entryData.setReload(!entryData.reload);
-
+ 
+  
   const handleToggle = () => {
     setLiveTrading(!isLiveTrading);
     setPaperTrading(!isPaperTrading);
@@ -51,7 +50,9 @@ const Dashboard = () => {
     const roundedTotalPnl = Number(totalPnl.toFixed(2));
 
     return roundedTotalPnl;
+    
   };
+  
 
   const todayProfitOrLoss = calculateTodayProfit();
 
