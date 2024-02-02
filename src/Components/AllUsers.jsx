@@ -80,6 +80,7 @@ const AllUsers = () => {
               <p className="font-bold text-center">User Name: {user.name}</p>
               <p className="text-center">User Email: {user.email}</p>
               <p className=" text-center">User Phone: {user.phone}</p>
+              <p className=" text-center">User Package: {user.packages}</p>
               <div className="flex justify-center mt-5">
                 <button
                   onClick={() => {
