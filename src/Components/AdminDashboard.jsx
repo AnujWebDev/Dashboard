@@ -18,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { LiaCoffeeSolid } from "react-icons/lia";
 import { LiaEnvelopeSolid } from "react-icons/lia";
+import Profile from "../assets/profile.png"
 
 import axios from "axios";
 
@@ -363,7 +364,7 @@ const AdminDashboard = () => {
             >
               {entryData.isAdminAuthenticated && (
                 <div className="flex justify-end  mt-2">
-                  <LiaUserTieSolid className="text-2xl mt-2" />
+                  <img src={Profile} className="w-[20px] h-[23px] mt-2 mr-1" alt="profile icon"></img>
                   <Link
                     style={{ fontFamily: "PT Sans, sans-serif" }}
                     className="flex flex-col text-sm mr-10 p-3 py-1 rounded-lg font-bold mb-2"

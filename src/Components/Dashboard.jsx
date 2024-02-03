@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
 import { LiaCoffeeSolid } from "react-icons/lia";
 import { LiaEnvelopeSolid } from "react-icons/lia";
+import Profile from "../assets/profile.png"
 
 const Dashboard = () => {
   const entryData = useContext(AppContext);
@@ -261,7 +262,7 @@ const Dashboard = () => {
                     style={{ fontFamily: "PT Sans, sans-serif" }}
                     className="flex text-md mr-10  py-1 rounded-lg font-bold mb-2"
                   >
-                    <LiaUserTieSolid className="text-2xl mr-3" />
+                    <img src={Profile} className="w-[20px] h-[25px] mr-1" alt="profile icon"></img>
                     {user?.name}
                   </Link>
                 </>
@@ -271,7 +272,7 @@ const Dashboard = () => {
                 <Link
                   to={"/"}
                   onClick={entryData.Logout}
-                  className="ml-10 mr-20 relative top-[-10px] right-1 lg:mr-10 text-md"
+                  className="ml-10 mr-20 relative top-[-10px] right-5 lg:mr-10 text-md"
                 >
                   Logout
                 </Link>
