@@ -18,7 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { LiaCoffeeSolid } from "react-icons/lia";
 import { LiaEnvelopeSolid } from "react-icons/lia";
-import Profile from "../assets/profile.png"
+import Profile from "../assets/Profile.png"
 
 import axios from "axios";
 
