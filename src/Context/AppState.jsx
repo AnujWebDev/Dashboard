@@ -13,7 +13,7 @@ const AppState = (props) => {
   const [admin, setAdmin] = useState("");
   const [AllUsers,setAllusers]=useState([])
 
-  const url = "https://dashboard-backend-oyt9.onrender.com/api";
+  const url = "http://localhost:4000/api";
 
   useEffect(() => {
     const fetchEntries = async () => {

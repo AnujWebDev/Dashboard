@@ -303,7 +303,7 @@ const AdminDashboard = () => {
                     Errors
                   </span>
                 )}
-                <div className="absolute z-0 bottom-4 right-[169px] -mt-1 -mr-1 bg-red-600 p-3 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+                <div className="absolute z-0 bottom-4 right-[166px] -mt-1 -mr-1 bg-red-600 p-3 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
                   {numberOfErrors}
                 </div>
               </li>

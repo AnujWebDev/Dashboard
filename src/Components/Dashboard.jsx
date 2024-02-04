@@ -27,7 +27,7 @@ const Dashboard = () => {
   const handleToggle = () => {
     // Toggle the state for live trading
     setLiveTrading(!isLiveTrading);
-  
+
     // Toggle the state for paper trading
     setPaperTrading(!isPaperTrading);
   };
@@ -168,7 +168,7 @@ const Dashboard = () => {
                     Errors
                   </span>
                 )}
-                <div className="absolute z-0 bottom-4 right-[169px] -mt-1 -mr-1 bg-red-600 p-3 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+                <div className="absolute z-0 bottom-4 right-[166px] -mt-1 -mr-1 bg-red-600 p-3 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
                   {numberOfErrors}
                 </div>
               </li>
@@ -204,29 +204,31 @@ const Dashboard = () => {
                 )}
               </li>
               <li>
-              <button
-      className={`relative inline-block overflow-hidden w-[150px] h-8 p-1 rounded-full ${
-        isLiveTrading ? "bg-[#00ffdc]" : "bg-[#ea0606ba]"
-      }`}
-      onClick={handleToggle}
-    >
-      <div
-        className={`absolute left-[-5px] top-[0px] bg-white rounded-t-full w-40 h-full rounded-md transform overflow-hidden ${
-          isLiveTrading ? "translate-x-[-15px]" : ""
-        } transition-transform duration-300 ease-in-out`}
-        style={{
-          backgroundColor: isLiveTrading ? "#268f81" : "#ea0606ba",
-          fontFamily: "PT Sans, sans-serif",
-          fontSize: "12px",
-        }}
-      >
-        <span
-          className={`absolute inset-0 flex items-center justify-center text-white`}
-        >
-          {isLiveTrading ? "Live trading is on" : "Paper trading is on"}
-        </span>
-      </div>
-    </button>
+                <button
+                  className={`relative inline-block overflow-hidden w-[230px] h-8 p-1 rounded-full ${
+                    isLiveTrading ? "bg-[#00ffdc]" : "bg-[#ea0606ba]"
+                  }`}
+                  onClick={handleToggle}
+                >
+                  <div
+                    className={`absolute left-[-5px] top-[0px] bg-white rounded-t-full w-40 h-full rounded-md transform overflow-hidden ${
+                      isLiveTrading ? "translate-x-[100px]" : ""
+                    } transition-transform duration-300 ease-in-out`}
+                    style={{
+                      backgroundColor: isLiveTrading ? "#268f81" : "#ea0606ba",
+                      fontFamily: "Poppins", sansSerif: "sans-serif" ,
+                      fontSize: "12px",
+                    }}
+                  >
+                    <span
+                      className={`absolute inset-0 flex items-center justify-center text-white`}
+                    >
+                      {isLiveTrading
+                        ? "Live trading is on"
+                        : "Paper trading is on"}
+                    </span>
+                  </div>
+                </button>
               </li>
             </ul>
           </div>
@@ -386,7 +388,7 @@ const Dashboard = () => {
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
                         fontSize: "14.72px",
-                        whiteSpace: "nowrap"
+                        whiteSpace: "nowrap",
                       }}
                     >
                       {user?.packages}
@@ -397,7 +399,7 @@ const Dashboard = () => {
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
                         fontSize: "13px",
-                        whiteSpace: "nowrap"
+                        whiteSpace: "nowrap",
                       }}
                     >
                       Your Active Plan
