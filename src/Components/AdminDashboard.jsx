@@ -303,7 +303,7 @@ const AdminDashboard = () => {
                     Errors
                   </span>
                 )}
-                <div className="absolute z-0 bottom-4 right-44 -mt-1 -mr-1 bg-red-600 p-3 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+                <div className="absolute z-0 bottom-4 right-[169px] -mt-1 -mr-1 bg-red-600 p-3 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
                   {numberOfErrors}
                 </div>
               </li>
@@ -364,7 +364,7 @@ const AdminDashboard = () => {
             >
               {entryData.isAdminAuthenticated && (
                 <div className="flex justify-end  mt-2">
-                  <img src={Profile} className="w-[20px] h-[23px] mt-2 mr-1" alt="profile icon"></img>
+                  <img src={Profile} className="w-[15px] h-[23px] mt-4 mr-1" alt="profile icon"></img>
                   <Link
                     style={{ fontFamily: "PT Sans, sans-serif" }}
                     className="flex flex-col text-sm mr-10 p-3 py-1 rounded-lg font-bold mb-2"
@@ -379,7 +379,7 @@ const AdminDashboard = () => {
                 <Link
                   onClick={entryData.AdminLogout}
                   to={"/adminlogin"}
-                  className="ml-10 mr-20 relative top-[-14px] left-[-27px] lg:mr-10 text-sm"
+                  className="ml-10 mr-20 text-gray-300 relative top-[-14px] left-[-35px] lg:mr-10 text-sm"
                 >
                   Logout
                 </Link>
@@ -496,6 +496,7 @@ const AdminDashboard = () => {
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
                         fontSize: "14.72px",
+                        whiteSpace: "nowrap"
                       }}
                     >
                       PREMIUM
@@ -506,6 +507,7 @@ const AdminDashboard = () => {
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
                         fontSize: "13px",
+                        whiteSpace: "nowrap"
                       }}
                     >
                       Your Active Plan

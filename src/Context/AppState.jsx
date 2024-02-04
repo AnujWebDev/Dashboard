@@ -12,6 +12,7 @@ const AppState = (props) => {
   const [user, setUser] = useState("");
   const [admin, setAdmin] = useState("");
   const [AllUsers,setAllusers]=useState([])
+
   const url = "https://dashboard-backend-oyt9.onrender.com/api";
 
   useEffect(() => {
@@ -158,6 +159,7 @@ const AppState = (props) => {
     myProfile();
   }, [token,reload]);
 
+
   useEffect(() => {
     const adminProfile = async () => {
       const api = await axios.get(`${url}/admin/profile`, {
@@ -219,7 +221,6 @@ const AppState = (props) => {
     console.log(api);
     return api.data
   }
-
 
   // console.log("id is coming",id)
 

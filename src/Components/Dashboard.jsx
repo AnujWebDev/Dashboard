@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
 import { LiaCoffeeSolid } from "react-icons/lia";
 import { LiaEnvelopeSolid } from "react-icons/lia";
-import Profile from "../assets/Profile.png"
+import Profile from "../assets/Profile.png";
 
 const Dashboard = () => {
   const entryData = useContext(AppContext);
@@ -21,16 +21,16 @@ const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedMenuItem, setSelectedMenuItem] = useState(null);
   const [numberOfErrors, setNumberOfErrors] = useState(0);
-  const [isLiveTrading, setLiveTrading] = useState(false);
+  const [isLiveTrading, setLiveTrading] = useState(true);
   const [isPaperTrading, setPaperTrading] = useState(false);
 
- 
-  
   const handleToggle = () => {
+    // Toggle the state for live trading
     setLiveTrading(!isLiveTrading);
+  
+    // Toggle the state for paper trading
     setPaperTrading(!isPaperTrading);
   };
-
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -51,9 +51,7 @@ const Dashboard = () => {
     const roundedTotalPnl = Number(totalPnl.toFixed(2));
 
     return roundedTotalPnl;
-    
   };
-  
 
   const todayProfitOrLoss = calculateTodayProfit();
 
@@ -170,7 +168,7 @@ const Dashboard = () => {
                     Errors
                   </span>
                 )}
-                <div className="absolute z-0 bottom-4 right-44 -mt-1 -mr-1 bg-red-600 p-3 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
+                <div className="absolute z-0 bottom-4 right-[169px] -mt-1 -mr-1 bg-red-600 p-3 text-white rounded-full h-4 w-4 flex items-center justify-center text-xs">
                   {numberOfErrors}
                 </div>
               </li>
@@ -206,31 +204,29 @@ const Dashboard = () => {
                 )}
               </li>
               <li>
-                <button
-                  className={`relative inline-block overflow-hidden w-full h-8 p-1 rounded-full ${
-                    isLiveTrading ? "bg-[#00ffdc]" : "bg-[#ea0606ba]"
-                  }`}
-                  onClick={handleToggle}
-                >
-                  <div
-                    className={`absolute left-[-5px] top-[0px] bg-white rounded-t-full w-36 h-full rounded-md transform overflow-hidden ${
-                      isLiveTrading ? "translate-x-full" : ""
-                    } transition-transform duration-300 ease-in-out`}
-                    style={{
-                      backgroundColor: isLiveTrading
-                        ? " #268f81 "
-                        : "#ea0606ba",
-                    }}
-                  >
-                    <span
-                      className={`absolute inset-0 flex items-center justify-center text-white`}
-                    >
-                      {isLiveTrading
-                        ? "Live trading is on"
-                        : "Paper trading is on"}
-                    </span>
-                  </div>
-                </button>
+              <button
+      className={`relative inline-block overflow-hidden w-[150px] h-8 p-1 rounded-full ${
+        isLiveTrading ? "bg-[#00ffdc]" : "bg-[#ea0606ba]"
+      }`}
+      onClick={handleToggle}
+    >
+      <div
+        className={`absolute left-[-5px] top-[0px] bg-white rounded-t-full w-40 h-full rounded-md transform overflow-hidden ${
+          isLiveTrading ? "translate-x-[-15px]" : ""
+        } transition-transform duration-300 ease-in-out`}
+        style={{
+          backgroundColor: isLiveTrading ? "#268f81" : "#ea0606ba",
+          fontFamily: "PT Sans, sans-serif",
+          fontSize: "12px",
+        }}
+      >
+        <span
+          className={`absolute inset-0 flex items-center justify-center text-white`}
+        >
+          {isLiveTrading ? "Live trading is on" : "Paper trading is on"}
+        </span>
+      </div>
+    </button>
               </li>
             </ul>
           </div>
@@ -262,7 +258,11 @@ const Dashboard = () => {
                     style={{ fontFamily: "PT Sans, sans-serif" }}
                     className="flex text-md mr-10  py-1 rounded-lg font-bold mb-2"
                   >
-                    <img src={Profile} className="w-[20px] h-[25px] mr-1" alt="profile icon"></img>
+                    <img
+                      src={Profile}
+                      className="w-[15px] h-[25px] mt-2 mr-2"
+                      alt="profile icon"
+                    ></img>
                     {user?.name}
                   </Link>
                 </>
@@ -272,7 +272,7 @@ const Dashboard = () => {
                 <Link
                   to={"/"}
                   onClick={entryData.Logout}
-                  className="ml-10 mr-20 relative top-[-10px] right-5 lg:mr-10 text-md"
+                  className="ml-10 mr-20 text-gray-300 relative top-[-25px] right-4 lg:mr-10 text-md"
                 >
                   Logout
                 </Link>
@@ -386,6 +386,7 @@ const Dashboard = () => {
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
                         fontSize: "14.72px",
+                        whiteSpace: "nowrap"
                       }}
                     >
                       {user?.packages}
@@ -396,6 +397,7 @@ const Dashboard = () => {
                         fontFamily: "Poppins",
                         sansSerif: "sans-serif",
                         fontSize: "13px",
+                        whiteSpace: "nowrap"
                       }}
                     >
                       Your Active Plan
@@ -469,7 +471,7 @@ const Dashboard = () => {
                             >
                               Qty
                             </th>
-                            {isLiveTrading && (
+                            {!isPaperTrading && (
                               <th
                                 style={{
                                   fontFamily: "Poppins",
@@ -551,7 +553,7 @@ const Dashboard = () => {
                               >
                                 {e.Qty}
                               </td>
-                              {isLiveTrading && (
+                              {!isPaperTrading && (
                                 <td
                                   style={{
                                     fontFamily: "Poppins",
