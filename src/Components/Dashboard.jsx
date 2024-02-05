@@ -205,14 +205,14 @@ const Dashboard = () => {
               </li>
               <li>
                 <button
-                  className={`relative inline-block overflow-hidden w-[230px] h-8 p-1 rounded-full ${
+                  className={`relative inline-block overflow-hidden w-[180px] h-8 p-1 rounded-full ${
                     isLiveTrading ? "bg-[#00ffdc]" : "bg-[#ea0606ba]"
                   }`}
                   onClick={handleToggle}
                 >
                   <div
                     className={`absolute left-[-5px] top-[0px] bg-white rounded-t-full w-40 h-full rounded-md transform overflow-hidden ${
-                      isLiveTrading ? "translate-x-[100px]" : ""
+                      isLiveTrading ? "translate-x-[50px]" : ""
                     } transition-transform duration-300 ease-in-out`}
                     style={{
                       backgroundColor: isLiveTrading ? "#268f81" : "#ea0606ba",
@@ -473,7 +473,7 @@ const Dashboard = () => {
                             >
                               Qty
                             </th>
-                            {!isPaperTrading && (
+                            {isPaperTrading && (
                               <th
                                 style={{
                                   fontFamily: "Poppins",
@@ -555,7 +555,7 @@ const Dashboard = () => {
                               >
                                 {e.Qty}
                               </td>
-                              {!isPaperTrading && (
+                              {isPaperTrading && (
                                 <td
                                   style={{
                                     fontFamily: "Poppins",
