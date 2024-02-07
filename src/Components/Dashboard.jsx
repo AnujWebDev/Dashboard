@@ -212,7 +212,7 @@ const Dashboard = () => {
                 >
                   <div
                     className={`absolute left-[-5px] top-[0px] bg-white rounded-t-full w-40 h-full rounded-md transform overflow-hidden ${
-                      isLiveTrading ? "translate-x-[50px]" : ""
+                      isLiveTrading ? "translate-x-[70px]" : ""
                     } transition-transform duration-300 ease-in-out`}
                     style={{
                       backgroundColor: isLiveTrading ? "#268f81" : "#ea0606ba",
@@ -221,11 +221,11 @@ const Dashboard = () => {
                     }}
                   >
                     <span
-                      className={`absolute inset-0 flex items-center justify-center text-white`}
+                      className={`absolute inset-0 flex items-center pr-9 justify-center text-white`}
                     >
                       {isLiveTrading
-                        ? "Live trading is on"
-                        : "Paper trading is on"}
+                        ? "Live Trading is ON"
+                        : "Paper Trading is ON"}
                     </span>
                   </div>
                 </button>
@@ -262,7 +262,7 @@ const Dashboard = () => {
                   >
                     <img
                       src={Profile}
-                      className="w-[15px] h-[25px] mt-2 mr-2"
+                      className="w-[10px] h-[20px] mt-2 mr-2"
                       alt="profile icon"
                     ></img>
                     {user?.name}
@@ -274,7 +274,7 @@ const Dashboard = () => {
                 <Link
                   to={"/"}
                   onClick={entryData.Logout}
-                  className="ml-10 mr-20 text-gray-300 relative top-[-25px] right-4 lg:mr-10 text-md"
+                  className="ml-10 mr-20 text-gray-300 relative top-[-20px] right-5 lg:mr-10 text-md"
                 >
                   Logout
                 </Link>
@@ -342,7 +342,7 @@ const Dashboard = () => {
                           whiteSpace: "nowrap",
                         }}
                       >
-                        2024-01-31 17:43:36
+                        {user?.time}
                       </span>
                     </h3>
                     <p
@@ -362,7 +362,7 @@ const Dashboard = () => {
                           fontSize: "12px",
                         }}
                       >
-                        Windows
+                        {user?.device}
                       </span>
                     </p>
                     <span

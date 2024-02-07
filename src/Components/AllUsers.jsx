@@ -20,6 +20,8 @@ const AllUsers = () => {
   const data = useContext(AppContext);
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [packages,setPackages]=useState("");
+  const [time,setTime]=useState("");
+  const [device,setDevice]=useState("");
   const { user } = useContext(AppContext);
   
 
@@ -40,7 +42,9 @@ const AllUsers = () => {
         const api = await axios.put(
           `${data.url}/package/${id}`,
           {
-            packages
+            packages,
+            time,
+            device
           },
           {
             headers: {
@@ -81,16 +85,20 @@ const AllUsers = () => {
               <p className="text-center">User Email: {user.email}</p>
               <p className=" text-center">User Phone: {user.phone}</p>
               <p className=" text-center">User Package: {user.packages}</p>
+              <p className=" text-center">User Time: {user.time}</p>
+              <p className=" text-center">User Device: {user.device}</p>
               <div className="flex justify-center mt-5">
                 <button
                   onClick={() => {
                     data.setId(user._id);
                     openModal();
                     setPackages(user.packages)
+                    setTime(user.time)
+                    setDevice(user.device)
                   }}
                   className="p-3 border bg-[#15202b] text-white"
                 >
-                  Give Package
+                  Update Details
                 </button>
                 <Modal
                   isOpen={modalIsOpen}
@@ -120,6 +128,38 @@ const AllUsers = () => {
                           name="packages"
                           value={packages}
                           onChange={(e) => setPackages(e.target.value)}
+                          className="form-input mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                        />
+                      </label>
+                    </div>
+                    <div className="mb-2">
+                      <label
+                        htmlFor="Strategy"
+                        className="block text-sm font-bold text-gray-600"
+                      >
+                        Time
+                        <input
+                          type="text"
+                          id="time"
+                          name="time"
+                          value={time}
+                          onChange={(e) => setTime(e.target.value)}
+                          className="form-input mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
+                        />
+                      </label>
+                    </div>
+                    <div className="mb-2">
+                      <label
+                        htmlFor="Strategy"
+                        className="block text-sm font-bold text-gray-600"
+                      >
+                        Device
+                        <input
+                          type="text"
+                          id="device"
+                          name="device"
+                          value={device}
+                          onChange={(e) => setDevice(e.target.value)}
                           className="form-input mt-1 block w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300"
                         />
                       </label>

@@ -364,7 +364,7 @@ const AdminDashboard = () => {
             >
               {entryData.isAdminAuthenticated && (
                 <div className="flex justify-end  mt-2">
-                  <img src={Profile} className="w-[15px] h-[23px] mt-4 mr-1" alt="profile icon"></img>
+                  <img src={Profile} className="w-[10px] h-[20px] mt-4 mr-1" alt="profile icon"></img>
                   <Link
                     style={{ fontFamily: "PT Sans, sans-serif" }}
                     className="flex flex-col text-sm mr-10 p-3 py-1 rounded-lg font-bold mb-2"
